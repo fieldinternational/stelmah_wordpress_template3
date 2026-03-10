@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>記事詳細 | ACRY LABO</title><script src="https://cdn.tailwindcss.com"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Noto+Sans+JP:wght@300;400;500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/><script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'neon-pink': '#FF00FF',
+        'dark-bg': '#111111',
+        'card-bg': '#1a1a1a',
+        'grid-line': '#2a2a2a',
+      },
+      fontFamily: {
+        sans: ['Inter','Noto Sans JP','sans-serif'],
+        mono: ['Space Mono','Courier New','monospace'],
+      }
+    }
+  }
+};
+window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+</script><style id="unified-style">
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:#0f0f0f; }
+::-webkit-scrollbar-thumb{ background:#FF00FF; border-radius:6px; }
+
+html,body{ height:100%; }
+body{
+  background:#111;
+  color:#eee;
+  font-family: Inter,'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ color:#fff; }
+a{ color:#fff; }
+a:hover{ color:#FF00FF; }
+
+.unified-section{
+  background:#111;
+  color:#eee;
+}
+
+/* ── Article Detail Styles ── */
+.detail-tag{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px 14px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.6);
+  font-size:12px; transition:all 250ms ease;
+}
+.detail-tag:hover{
+  border-color:rgba(255,0,255,0.4); color:#FF00FF;
+}
+
+/* ── Related Category Cards (Grid) ── */
+.related-card{
+  background:#1a1a1a;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px; overflow:hidden;
+  transition:transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+}
+.related-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,0,255,0.4);
+  box-shadow:0 16px 40px rgba(255,0,255,0.08);
+}
+.related-card img{
+  width:100%; height:180px; object-fit:cover;
+  filter:grayscale(30%);
+  transition:filter 400ms ease;
+}
+.related-card:hover img{ filter:grayscale(0%); }
+.related-card .rc-body{ padding:18px; }
+.related-card .rc-badge{
+  display:inline-block;
+  padding:3px 10px; border-radius:999px;
+  background:rgba(255,0,255,0.12); color:#FF00FF;
+  font-family:'Space Mono',monospace;
+  font-size:10px; letter-spacing:0.08em;
+  margin-bottom:8px;
+}
+.related-card .rc-title{
+  font-size:14px; font-weight:600; line-height:1.5;
+  color:#fff; margin-bottom:6px;
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+}
+.related-card .rc-date{
+  font-family:'Space Mono',monospace;
+  font-size:11px; color:rgba(255,255,255,0.35);
+}
+
+/* ── Same Tag Items (Horizontal List) ── */
+.tag-item{
+  display:flex; gap:16px; align-items:center;
+  padding:16px 20px;
+  background:#1a1a1a;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  transition:border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease;
+}
+.tag-item:hover{
+  border-color:rgba(255,0,255,0.35);
+  transform:translateX(6px);
+  box-shadow:0 8px 24px rgba(255,0,255,0.06);
+}
+.tag-item .ti-num{
+  flex-shrink:0;
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  background:rgba(255,0,255,0.1);
+  color:#FF00FF;
+  font-family:'Space Mono',monospace;
+  font-size:14px; font-weight:700;
+}
+.tag-item .ti-img{
+  flex-shrink:0;
+  width:80px; height:60px;
+  border-radius:10px;
+  object-fit:cover;
+  filter:grayscale(30%);
+  transition:filter 400ms ease;
+}
+.tag-item:hover .ti-img{ filter:grayscale(0%); }
+.tag-item .ti-body{ flex:1; min-width:0; }
+.tag-item .ti-title{
+  font-size:14px; font-weight:600; line-height:1.5;
+  color:#fff;
+  display:-webkit-box; -webkit-line-clamp:1;
+  -webkit-box-orient:vertical; overflow:hidden;
+}
+.tag-item .ti-meta{
+  display:flex; align-items:center; gap:10px;
+  margin-top:4px;
+}
+.tag-item .ti-tag{
+  font-size:10px; color:rgba(255,0,255,0.8);
+  background:rgba(255,0,255,0.08);
+  padding:2px 8px; border-radius:999px;
+}
+.tag-item .ti-date{
+  font-family:'Space Mono',monospace;
+  font-size:10px; color:rgba(255,255,255,0.35);
+}
+.tag-item .ti-arrow{
+  flex-shrink:0;
+  color:rgba(255,255,255,0.2);
+  font-size:14px;
+  transition:color 300ms ease, transform 300ms ease;
+}
+.tag-item:hover .ti-arrow{
+  color:#FF00FF;
+  transform:translateX(4px);
+}
+
+/* ── CKEditor Article Body Headings ── */
+#articleBody h2{
+  font-size:1.5rem;
+  font-weight:900;
+  color:#fff;
+  margin-top:2.5rem;
+  margin-bottom:1rem;
+  padding-left:14px;
+  border-left:4px solid #FF00FF;
+  line-height:1.4;
+}
+#articleBody h3{
+  font-size:1.2rem;
+  font-weight:700;
+  color:rgba(255,255,255,0.9);
+  margin-top:2rem;
+  margin-bottom:0.75rem;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(255,0,255,0.25);
+  line-height:1.5;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.fade-in-up{
+  animation: fadeInUp 400ms ease forwards;
+}
+</style></head>
+<body class="bg-black text-white">
+<header class="fixed top-0 left-0 w-full z-50 pointer-events-none mix-blend-difference text-white p-6 flex justify-between items-start"><div class="font-mono text-sm tracking-widest"><span class="block">ACRY LABO</span><span class="block text-xs opacity-70">ACRYLIC GOODS MEDIA</span></div><div class="pointer-events-auto flex items-center gap-3"><nav class="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.35em] uppercase opacity-90"><a href="index.html" class="hover:text-neon-pink transition-colors">TOP</a><a href="articles.html" class="hover:text-neon-pink transition-colors">ARTICLES</a><a href="guide.html" class="hover:text-neon-pink transition-colors">GUIDE</a><a href="about.html" class="hover:text-neon-pink transition-colors">ABOUT</a><a href="privacy.html" class="hover:text-neon-pink transition-colors">PRIVACY</a><a href="news.html" class="hover:text-neon-pink transition-colors">NEWS</a><a href="#" class="hover:text-neon-pink transition-colors">SERVICE</a></nav><div class="text-xs opacity-80 font-mono" id="topClock">--:--</div><a class="bg-neon-pink text-black hover:bg-white px-4 py-2 font-bold uppercase text-xs tracking-widest transition-colors" href="#contact">お問い合わせ</a></div></header>
+<div class="h-24"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-16 unified-section">
+
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-400 font-mono tracking-widest">
+    <a href="index.html" class="hover:text-white">HOME</a>
+    <span class="mx-2">/</span>
+    <a href="articles.html" class="hover:text-white">ARTICLES</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-300" id="breadcrumbTitle">DETAIL</span>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="mt-8" id="articleHeader">
+    <!-- JS renders here -->
+  </header>
+
+  <!-- Article Hero Image -->
+  <figure class="mt-10 rounded-3xl overflow-hidden border border-white/10 bg-white/5" id="articleHeroFigure">
+    <!-- JS renders here -->
+  </figure>
+
+  <!-- Article Body -->
+  <article class="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10 leading-relaxed" id="articleBody">
+    <!-- JS renders here -->
+  </article>
+
+  <!-- Back / CTA -->
+  <div class="mt-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+    <a href="articles.html" class="px-5 py-3 rounded-2xl border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm font-bold tracking-wide">← 記事一覧へ戻る</a>
+    <a href="#contact" class="bg-neon-pink text-black hover:bg-white px-6 py-3 font-bold uppercase text-xs tracking-widest transition-colors rounded-full text-center">お問い合わせ</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- Related Category Articles (Card Grid Layout)  -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="mt-20" id="relatedCategorySection">
+    <div class="flex items-center gap-4 mb-6">
+      <div>
+        <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">RELATED CATEGORY</div>
+        <h2 class="text-2xl font-bold mt-1" id="relatedCategoryTitle">関連カテゴリのコラム</h2>
+      </div>
+      <div class="flex-1 h-px bg-white/10 ml-4"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="relatedCategoryGrid">
+      <!-- JS renders here -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- Same Tag Articles (Horizontal List Layout)    -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="mt-20 mb-8" id="sameTagSection">
+    <div class="flex items-center gap-4 mb-6">
+      <div>
+        <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">SAME TAGS</div>
+        <h2 class="text-2xl font-bold mt-1" id="sameTagTitle">同じタグのコラム</h2>
+      </div>
+      <div class="flex-1 h-px bg-white/10 ml-4"></div>
+    </div>
+    <div class="flex flex-col gap-4" id="sameTagList">
+      <!-- JS renders here -->
+    </div>
+  </section>
+
+</main>
+
+<footer class="unified-section py-16 border-t border-white/10" id="contact"><div class="max-w-6xl mx-auto px-6">
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">ABOUT US</div>
+<h2 class="text-3xl font-bold mt-3 text-white">運営情報</h2>
+<div class="mt-8 rounded-3xl border border-white/10 bg-[#0f0f10] p-8 max-w-lg">
+<dl class="space-y-4 text-sm text-white/80">
+<div class="flex justify-between gap-4"><dt class="text-white/60">運営会社</dt><dd class="text-right">ACRY LABO</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">所在地</dt><dd class="text-right">〒107-0062 東京都港区南青山5-10-1</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">Email</dt><dd class="text-right">info@acrylabo.jp</dd></div>
+</dl>
+</div>
+</div></footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ── Clock ── */
+  const clockEl = document.getElementById('topClock');
+  const pad = (n) => String(n).padStart(2,'0');
+  const tick = () => {
+    const now = new Date();
+    if(clockEl) clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 10000);
+
+  /* ── Article Data (same as articles.html) ── */
+  const articles = [
+    {
+      id:1, cat:'keychain', tags:['beginner','design'],
+      title:'アクリルキーホルダーの作り方｜初心者でも失敗しない完全ガイド',
+      excerpt:'アクリルキーホルダーをはじめて作る方向けに、データ作成から入稿・仕上がりまでの全工程をわかりやすく解説します。',
+      body:'<p>アクリルキーホルダーは、推し活やノベルティ、同人グッズとして人気の定番アイテムです。この記事では、初めてアクリルキーホルダーを作る方でも失敗しないよう、データ作成から入稿、仕上がりまでの全工程をステップバイステップで解説します。</p><h2>1. デザインデータの準備</h2><p class="mt-4">まずはデザインデータを作成します。Illustratorを使う場合は、テンプレートをダウンロードしてカットパスを設定しましょう。Photoshopやスマホアプリでも作成可能なサービスもあります。</p><h2>2. カットパスの設定</h2><p class="mt-4">カットパスとは、アクリルをカットするラインのことです。イラストの外側2〜3mm程度に設定するのが一般的です。角を丸くすることで、仕上がりがキレイになります。</p><h3>3. 入稿と注文</h3><p class="mt-4">データが完成したら入稿します。カラーモードはCMYK、解像度は350dpi以上を推奨。塗り足しも忘れずに設定しましょう。</p>',
+      date:'2024-12-15',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/f232c45305-2c7b155114100a018a1e.png'
+    },
+    {
+      id:2, cat:'keychain', tags:['template','beginner'],
+      title:'アクリルキーホルダーのテンプレート活用術｜時短デザインの秘訣',
+      excerpt:'無料テンプレートを活用して効率よくアクリルキーホルダーをデザインする方法を紹介。Illustrator・Photoshop対応。',
+      body:'<p>無料テンプレートを活用すれば、デザイン初心者でも効率よくアクリルキーホルダーを制作できます。この記事では、各制作サービスが提供するテンプレートの使い方と、時短デザインのコツを紹介します。</p>',
+      date:'2024-12-08',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/381dba732e-8b14493a404087c5b367.png'
+    },
+    {
+      id:3, cat:'keychain', tags:['design','oshi'],
+      title:'アクリルキーホルダーの両面印刷｜デザインのポイントと注意点',
+      excerpt:'両面印刷のアクリルキーホルダーを作るときに知っておきたいデザインの裏表合わせや印刷ズレ対策を解説。',
+      body:'<p>両面印刷のアクリルキーホルダーは、表裏で異なるデザインを楽しめる人気の仕様です。ここでは裏表の位置合わせや印刷ズレ対策など、両面印刷ならではのポイントを詳しく解説します。</p>',
+      date:'2024-11-28',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/9c3a384c9c-db5ef922f12055a7a40f.png'
+    },
+    {
+      id:4, cat:'stand', tags:['doujin','design'],
+      title:'同人イベントで映える！アクリルスタンド制作のコツ',
+      excerpt:'イベントのディスプレイで目を引くアクリルスタンドの制作ポイント。サイズ選び・台座デザイン・梱包方法まで網羅。',
+      body:'<p>同人イベントでのディスプレイに欠かせないアクリルスタンド。この記事では、サイズ選びから台座デザイン、梱包・搬入方法まで、イベントで映えるアクリルスタンド制作のコツをまとめます。</p>',
+      date:'2024-11-20',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/695ae2f233-049417f5fd4fbd7429d3.png'
+    },
+    {
+      id:5, cat:'block', tags:['beginner','oshi'],
+      title:'アクリルブロック印刷の基礎知識｜写真映えするグッズを作ろう',
+      excerpt:'透明感が美しいアクリルブロック。写真やイラストを封入したような仕上がりが人気の理由と制作の基本を紹介します。',
+      body:'<p>アクリルブロックは、写真やイラストを透明なアクリルに封入したような美しい仕上がりが魅力のグッズです。この記事では、アクリルブロック印刷の基礎知識から、写真映えするデータの作り方までを解説します。</p>',
+      date:'2024-11-12',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/91c7b19543-e548c6d370d1c5553319.png'
+    },
+    {
+      id:6, cat:'compare', tags:['beginner'],
+      title:'【2024年版】アクリルキーホルダー制作サービス5社を徹底比較',
+      excerpt:'価格・納期・品質・テンプレートの充実度で人気5社を比較。あなたに最適なサービスが見つかります。',
+      body:'<p>アクリルキーホルダーの制作サービスは数多くありますが、それぞれ価格体系や品質、対応テンプレートが異なります。この記事では、人気5社を価格・納期・品質・テンプレートの4つの観点で徹底比較します。</p>',
+      date:'2024-11-05',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/fe2006aea0-4299cec61cd6941064c2.png'
+    },
+    {
+      id:7, cat:'compare', tags:['novelty'],
+      title:'ノベルティグッズ制作サービスおすすめ比較｜法人・個人対応',
+      excerpt:'企業ノベルティや販促品としてアクリルグッズを検討中の方へ。小ロット対応・法人割引のあるサービスを比較紹介。',
+      body:'<p>企業のノベルティや販促品としてアクリルグッズの需要が高まっています。この記事では、法人対応・小ロット対応・割引制度のあるおすすめサービスを比較紹介します。</p>',
+      date:'2024-10-28',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/c85b578a9e-772ac21a83c23cbbaa7b.png'
+    },
+    {
+      id:8, cat:'compare', tags:['doujin','novelty'],
+      title:'同人グッズ印刷所を価格・品質・納期で徹底比較',
+      excerpt:'同人イベント向けのアクリルグッズ印刷所を実際に利用した経験をもとに、価格・品質・納期の3軸で比較します。',
+      body:'<p>同人イベントに向けてアクリルグッズを作りたい方向けに、実際に利用した経験をもとに印刷所を比較します。価格・品質・納期の3つの軸でわかりやすくまとめました。</p>',
+      date:'2024-10-20',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/9505e1e237-ab32fc72ebdc15d2166e.png'
+    },
+    {
+      id:9, cat:'guide', tags:['oshi','design'],
+      title:'推し活グッズの定番！アクリルスタンドのデザインアイデア集',
+      excerpt:'推しの写真やイラストを使ったアクリルスタンドのデザインパターンを20種以上紹介。すぐに使えるレイアウト例付き。',
+      body:'<p>推し活に欠かせないアクリルスタンド。推しの写真やイラストを使ったデザインパターンを20種以上紹介します。すぐに使えるレイアウト例付きなので、初心者でも安心です。</p>',
+      date:'2024-10-15',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/fbf5003638-da33663e9fe28af01d63.png'
+    },
+    {
+      id:10, cat:'guide', tags:['design','template'],
+      title:'プロが教えるアクリルグッズのデザインテクニック',
+      excerpt:'プロのデザイナーが実践するアクリルグッズのデザインテクニックを公開。配色・レイアウト・フォント選びのコツ。',
+      body:'<p>プロのデザイナーが実際に使っているアクリルグッズのデザインテクニックを公開。配色の基本、レイアウトのコツ、フォント選びのポイントなど、クオリティを上げるテクニックを紹介します。</p>',
+      date:'2024-10-08',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/5a83b2fd13-1dd642fe3cb74a68b0e5.png'
+    },
+    {
+      id:11, cat:'howto', tags:['template','design'],
+      title:'入稿データの作り方｜Illustrator編・完全マニュアル',
+      excerpt:'Illustratorでのアクリルグッズ入稿データ作成手順を図解付きで解説。カットパス・塗り足し・カラーモードの設定方法。',
+      body:'<p>Illustratorを使ったアクリルグッズの入稿データ作成手順を、図解付きでわかりやすく解説します。カットパスの設定、塗り足しの追加、カラーモードの変換方法を一つずつ説明します。</p>',
+      date:'2024-09-30',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/898206917e-3ddb21a248c372f2e525.png'
+    },
+    {
+      id:12, cat:'howto', tags:['beginner','template'],
+      title:'入稿時によくあるミスと対処法まとめ｜失敗しないチェックリスト',
+      excerpt:'入稿データのよくあるミスをランキング形式で紹介。事前にチェックすれば再入稿の手間を防げます。',
+      body:'<p>入稿データのよくあるミスをランキング形式で紹介します。カラーモードの間違い、塗り足し不足、カットパスのズレなど、事前にチェックすれば再入稿の手間を防げるポイントをまとめました。</p>',
+      date:'2024-09-22',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/7ea3bef47d-b49ee100df3222f93ea6.png'
+    }
+  ];
+
+  const catLabels = {
+    keychain:'アクリルキーホルダー', stand:'アクリルスタンド', block:'アクリルブロック',
+    compare:'サービス比較', guide:'デザインガイド', howto:'入稿ノウハウ'
+  };
+  const tagLabels = {
+    beginner:'初心者向け', template:'テンプレート', doujin:'同人グッズ',
+    novelty:'ノベルティ', oshi:'推し活', design:'デザイン'
+  };
+
+  /* ── Get article ID from URL ── */
+  const params = new URLSearchParams(window.location.search);
+  const articleId = parseInt(params.get('id')) || 1;
+  const article = articles.find(a => a.id === articleId) || articles[0];
+
+  /* ── Render Article Header ── */
+  const headerEl = document.getElementById('articleHeader');
+  const breadcrumbEl = document.getElementById('breadcrumbTitle');
+  breadcrumbEl.textContent = article.title.length > 20 ? article.title.substring(0, 20) + '...' : article.title;
+
+  headerEl.innerHTML = `
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <span class="font-mono text-xs tracking-widest text-gray-400">${article.date}</span>
+      <a href="articles.html?cat=${article.cat}" class="font-mono text-[11px] tracking-widest px-4 py-1.5 rounded-full bg-neon-pink/15 text-neon-pink border border-neon-pink/30 hover:bg-neon-pink/25 transition">
+        <i class="fa-solid fa-folder text-[9px] mr-1"></i>${catLabels[article.cat]}
+      </a>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-black tracking-tight leading-tight">${article.title}</h1>
+    <p class="text-gray-300 mt-5 leading-relaxed">${article.excerpt}</p>
+    <div class="flex flex-wrap gap-2 mt-5">
+      ${article.tags.map(t => `
+        <a href="articles.html?tag=${t}" class="detail-tag">
+          <i class="fa-solid fa-hashtag text-[9px] text-neon-pink/60"></i>${tagLabels[t] || t}
+        </a>
+      `).join('')}
+    </div>
+  `;
+
+  /* ── Render Hero Image ── */
+  const heroFigure = document.getElementById('articleHeroFigure');
+  heroFigure.innerHTML = `<img src="${article.img}" alt="${article.title}" class="w-full h-72 md:h-96 object-cover opacity-90" />`;
+
+  /* ── Render Article Body ── */
+  const bodyEl = document.getElementById('articleBody');
+  bodyEl.innerHTML = `
+    <div class="text-gray-200 space-y-4">${article.body}</div>
+    <div class="mt-10 rounded-2xl border border-white/10 bg-black/30 p-6">
+      <p class="font-mono text-xs tracking-widest text-gray-400">NOTE</p>
+      <p class="text-gray-200 mt-2">実データ連携前の静的テンプレートです。CMS化する場合は、このカード・本文構造をそのまま流用できます。</p>
+    </div>
+  `;
+
+  /* ══════════════════════════════════════════════════════
+     Related Category Articles (Card Grid Layout)
+     ══════════════════════════════════════════════════════ */
+  const relatedByCategory = articles
+    .filter(a => a.cat === article.cat && a.id !== article.id)
+    .slice(0, 3);
+
+  const relatedCatTitle = document.getElementById('relatedCategoryTitle');
+  relatedCatTitle.textContent = `${catLabels[article.cat]}の関連コラム`;
+
+  const relatedGrid = document.getElementById('relatedCategoryGrid');
+  if(relatedByCategory.length === 0){
+    relatedGrid.innerHTML = '<p class="text-white/40 font-mono text-sm col-span-3 text-center py-10">関連カテゴリの記事はありません</p>';
+  } else {
+    relatedGrid.innerHTML = relatedByCategory.map((a, i) => `
+      <a href="articles_detail.html?id=${a.id}" class="related-card fade-in-up" style="animation-delay:${i * 80}ms">
+        <img src="${a.img}" alt="${a.title}" loading="lazy"/>
+        <div class="rc-body">
+          <span class="rc-badge">${catLabels[a.cat]}</span>
+          <h3 class="rc-title">${a.title}</h3>
+          <div class="flex items-center justify-between mt-2">
+            <span class="rc-date">${a.date}</span>
+            <span class="font-mono text-[11px] text-neon-pink tracking-wider">READ →</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  /* ══════════════════════════════════════════════════════
+     Same Tag Articles (Horizontal List Layout)
+     ══════════════════════════════════════════════════════ */
+  const relatedByTag = articles
+    .filter(a => a.id !== article.id && a.tags.some(t => article.tags.includes(t)))
+    .slice(0, 3);
+
+  const sameTagTitle = document.getElementById('sameTagTitle');
+  const tagDisplay = article.tags.map(t => `#${tagLabels[t] || t}`).join(' ');
+  sameTagTitle.innerHTML = `<span class="text-white">同じタグ</span><span class="text-neon-pink/60 text-lg ml-2">${tagDisplay}</span><span class="text-white"> のコラム</span>`;
+
+  const tagList = document.getElementById('sameTagList');
+  if(relatedByTag.length === 0){
+    tagList.innerHTML = '<p class="text-white/40 font-mono text-sm text-center py-10">同じタグの記事はありません</p>';
+  } else {
+    tagList.innerHTML = relatedByTag.map((a, i) => {
+      const sharedTags = a.tags.filter(t => article.tags.includes(t));
+      return `
+        <a href="articles_detail.html?id=${a.id}" class="tag-item fade-in-up" style="animation-delay:${i * 100}ms">
+          <span class="ti-num">${String(i + 1).padStart(2, '0')}</span>
+          <img src="${a.img}" alt="${a.title}" class="ti-img hidden sm:block" loading="lazy"/>
+          <div class="ti-body">
+            <h3 class="ti-title">${a.title}</h3>
+            <div class="ti-meta">
+              ${sharedTags.map(t => `<span class="ti-tag">#${tagLabels[t] || t}</span>`).join('')}
+              <span class="ti-date">${a.date}</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right ti-arrow"></i>
+        </a>
+      `;
+    }).join('');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1021 @@
+<?php
+/**
+ * Template Name: Guide
+ * Description: ガイドページテンプレート
+ */
+
+get_header();
+?>
+
+</style><style id="list-overrides">
+/* list page overrides for embedded i1/i2 */
+#list-i1, #list-i2 { scroll-margin-top: 110px; }
+#list-i1 *, #list-i2 * { max-width: 100%; }
+
+/* neutralize fixed-width canvases */
+#list-i2 #main-container,
+#list-i2 .w-\[1440px\]{
+  width: 100% !important;
+  max-width: 100% !important;
+}
+#list-i2 body{ overflow-x: hidden; }
+
+/* avoid embedded pages changing global background */
+#list-i1 body, #list-i2 body { background: transparent !important; }
+
+/* make embedded light sections readable on dark */
+#list-i1 .bg-white, #list-i2 .bg-white { background:#1a1a1a !important; }
+#list-i1 .text-black, #list-i2 .text-black { color:#fff !important; }
+#list-i1 .border-black, #list-i2 .border-black { border-color: rgba(255,255,255,0.18) !important; }
+</style>
+<style>
+  /* merged detail page helpers */
+  .detail-section{padding:56px 0;}
+  .detail-section + .detail-section{border-top:1px solid rgba(255,255,255,.08);}
+</style>
+<style id="list-overrides">/* list page overrides for embedded i1/i2 */
+#list-i1, #list-i2 { scroll-margin-top: 110px; }
+#list-i1 *, #list-i2 * { max-width: 100%; }
+
+/* neutralize fixed-width canvases */
+#list-i2 #main-container,
+#list-i2 .w-\[1440px\]{
+  width: 100% !important;
+  max-width: 100% !important;
+}
+#list-i2 body{ overflow-x: hidden; }
+
+/* avoid embedded pages changing global background */
+#list-i1 body, #list-i2 body { background: transparent !important; }
+
+/* make embedded light sections readable on dark */
+#list-i1 .bg-white{ background:#1a1a1a !important; }
+#list-i1 .text-black{ color:#fff !important; }
+#list-i1 .border-black{ border-color: rgba(255,255,255,0.18) !important; }
+
+
+/* Fix overlaps/clipping in embedded i1/i2 (CREATIVE SPACE / ROOMS area) */
+#list-i1 .vertical-text{
+  z-index: 0 !important;
+  pointer-events: none;
+  opacity: 0.45;
+  max-width: 100%;
+}
+#list-i1 .vertical-text + *{ position: relative; z-index: 10; }
+#list-i1 #rooms, #list-i1 .rooms, #list-i1 .rooms-section{
+  position: relative;
+  z-index: 5;
+}
+/* Ensure room cards sit above decorative text */
+#list-i1 #rooms .rounded-3xl,
+#list-i1 #rooms .rounded-xl,
+#list-i1 #rooms .card,
+#list-i1 #rooms [class*="rounded"]{
+  position: relative;
+  z-index: 10;
+}
+/* Prevent large absolute headings from covering content on smaller screens */
+@media (max-width: 1024px){
+  #list-i1 .vertical-text{
+    font-size: clamp(40px, 10vw, 88px) !important;
+    line-height: 0.9 !important;
+    opacity: 0.25 !important;
+  }
+}
+@media (max-width: 768px){
+  #list-i1 .vertical-text{ display:none !important; }
+  #list-i1 #hero-section, #list-i1 .relative.h-\[900px\]{ height: auto !important; min-height: 0 !important; }
+  #list-i1 .pt-20{ padding-top: 2.5rem !important; }
+  #list-i1 .pl-24{ padding-left: 1.5rem !important; }
+  #list-i1 .pr-8{ padding-right: 1.5rem !important; }
+}
+
+/* ===== Fix for i2 (STUDIO POP / ROOMS) overlaps & clipping ===== */
+#list-i2 #main-container{
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important; /* was overflow-hidden -> clipped CTA */
+}
+#list-i2 #hero-section{
+  height: auto !important;      /* was h-[900px] -> caused overlap/gaps */
+  min-height: 0 !important;
+}
+#list-i2 #hero-section > .grid{
+  height: auto !important;
+  min-height: 0 !important;
+}
+#list-i2 .comic-border{
+  max-width: 100%;
+}
+#list-i2 .shadow-comic{
+  transform: none !important;   /* reduce accidental clipping */
+}
+#list-i2 .vertical-text,
+#list-i2 [class*="vertical-text"]{
+  display: none !important;     /* remove big decorative text that overlays cards */
+}
+/* ensure ROOMS/cards layer above any decorative absolute elements */
+#list-i2 #rooms,
+#list-i2 [id*="rooms"]{
+  position: relative;
+  z-index: 5;
+}
+#list-i2 #rooms *{
+  position: relative;
+  z-index: 5;
+}
+/* prevent negative offsets from overlapping the next section in the list page */
+#list-i2 [class*="-mt-"],
+#list-i2 [class*="-mb-"]{
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* ===== i2 rooms card readability (fix captions / AREA labels) ===== */
+#list-i2 .grid.grid-cols-3 .group.relative{
+  background: #111 !important; /* avoid unintended light bg conflicts */
+}
+#list-i2 .grid.grid-cols-3 .group.relative .h-1\/3{
+  background: #111 !important;
+}
+#list-i2 .grid.grid-cols-3 .group.relative .h-1\/3 h3{
+  color: #fff !important;
+}
+#list-i2 .grid.grid-cols-3 .group.relative .h-1\/3 p{
+  color: rgba(255,255,255,0.72) !important;
+}
+#list-i2 .grid.grid-cols-3 .group.relative .absolute.top-4.left-4{
+  background: rgba(255,255,255,0.92) !important;
+  color: #000 !important;
+  border-color: rgba(255,255,255,0.35) !important;
+  z-index: 30 !important;
+}
+/* arrow/icon visibility */
+#list-i2 .grid.grid-cols-3 .group.relative .absolute.bottom-4.right-4{
+  color: #FF00FF !important;
+}
+
+/* ===== Final fixes for red-box issues (CTA + ROOMS cards) ===== */
+
+/* 1) Hero CTA box (top right) text visibility + no clipping */
+#list-i2 .bg-black\/30,
+#list-i2 .bg-black\/40,
+#list-i2 .bg-black\/50,
+#list-i2 .bg-black\/60{
+  color: #fff !important;
+}
+#list-i2 .bg-black\/30 h3,
+#list-i2 .bg-black\/40 h3,
+#list-i2 .bg-black\/50 h3,
+#list-i2 .bg-black\/60 h3,
+#list-i2 .bg-black\/30 p,
+#list-i2 .bg-black\/40 p,
+#list-i2 .bg-black\/50 p,
+#list-i2 .bg-black\/60 p{
+  color: #fff !important;
+}
+#list-i2 .bg-black\/30{ background: rgba(0,0,0,0.50) !important; }
+#list-i2 .bg-black\/40{ background: rgba(0,0,0,0.58) !important; }
+#list-i2 .bg-black\/50{ background: rgba(0,0,0,0.66) !important; }
+#list-i2 .bg-black\/60{ background: rgba(0,0,0,0.74) !important; }
+
+/* 2) ROOMS card caption block: enforce dark bg + white text, fix clipping */
+#list-i2 #rooms .group.relative{
+  overflow: visible !important;
+}
+#list-i2 #rooms .group.relative > div{
+  overflow: visible !important;
+}
+#list-i2 #rooms .group.relative .h-1\/3{
+  background: rgba(0,0,0,0.78) !important;
+  padding: 18px 18px 22px 18px !important;
+  min-height: 140px !important;          /* prevent text cut */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+#list-i2 #rooms .group.relative .h-1\/3 h3{
+  color: #fff !important;
+  letter-spacing: 0.02em;
+  line-height: 1.1 !important;
+}
+#list-i2 #rooms .group.relative .h-1\/3 p{
+  color: rgba(255,255,255,0.80) !important;
+  line-height: 1.55 !important;
+  margin: 0 !important;
+  display: block !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+/* Arrow icon: keep visible but avoid covering text */
+#list-i2 #rooms .group.relative .absolute.bottom-4.right-4{
+  right: 14px !important;
+  bottom: 14px !important;
+  z-index: 40 !important;
+  background: rgba(0,0,0,0.55) !important;
+  padding: 8px !important;
+  border-radius: 999px !important;
+}
+#list-i2 #rooms .group.relative .h-1\/3{ padding-right: 54px !important; } /* reserve space for arrow */
+
+/* Mobile: allow more caption height */
+@media (max-width: 768px){
+  #list-i2 #rooms .group.relative .h-1\/3{ min-height: 160px !important; }
+}
+
+/* ===== Patch: CTA heading color + ROOMS/PRICE overlap ===== */
+
+/* Green box: CTA heading was text-black on dark -> force white + darken the card background */
+#list-i2 #hero-section .bg-white.p-6.rounded-xl.border-4.border-black{
+  background: rgba(0,0,0,0.70) !important;
+}
+#list-i2 #hero-section .bg-white.p-6.rounded-xl.border-4.border-black .text-black{
+  color: #fff !important;
+}
+
+/* Red box: ROOMS captions were spilling into PRICE -> keep within card + add spacing */
+#list-i2 #rooms{ margin-bottom: 56px !important; }
+#list-i2 #rooms .group.relative{ overflow: hidden !important; }
+#list-i2 #rooms .group.relative .h-1\/3{
+  position: relative !important;
+  bottom: auto !important;
+}
+
+/* ===== Make ROOMS captions fully visible (no truncation) + keep away from PRICE ===== */
+#list-i2 #rooms{ margin-bottom: 96px !important; } /* extra buffer before PRICE */
+#list-i2 #rooms .grid{ align-items: stretch !important; }
+
+#list-i2 #rooms .group.relative{
+  height: auto !important;            /* allow card to grow with text */
+  overflow: visible !important;       /* avoid clipping the caption */
+}
+
+/* Keep image block visually consistent, but not tied to 2/3 of a fixed height */
+#list-i2 #rooms .group.relative .h-2\/3{
+  height: clamp(240px, 26vw, 360px) !important;
+}
+
+/* Caption area becomes auto-height so full text shows */
+#list-i2 #rooms .group.relative .h-1\/3{
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Avoid any implicit truncation */
+#list-i2 #rooms .group.relative .h-1\/3 p{
+  display: block !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+}
+
+/* ===== ACCESS card text color (make readable on dark) ===== */
+/* Target the ACCESS card via the location-dot icon */
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)) h2{
+  color:#fff !important;
+}
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)) .text-black{
+  color:#fff !important;
+}
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)){
+  background: rgba(0,0,0,0.70) !important; /* keep same taste and improve contrast */
+}
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)) .text-gray-400,
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)) .text-gray-500,
+#list-i2 .bg-off-white:has(h2:has(.fa-location-dot)) .text-gray-600{
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* ===== Robust fix: ACCESS (and similar cards) black text -> white (no :has) ===== */
+#list-i2 .bg-off-white{
+  background: rgba(0,0,0,0.72) !important;
+}
+#list-i2 .bg-off-white .text-black,
+#list-i2 .bg-off-white h1,
+#list-i2 .bg-off-white h2,
+#list-i2 .bg-off-white h3,
+#list-i2 .bg-off-white p,
+#list-i2 .bg-off-white div{
+  color: #fff !important;
+}
+/* Keep badges as designed */
+#list-i2 .bg-off-white .bg-black{
+  background: #000 !important;
+}
+#list-i2 .bg-off-white .bg-black,
+#list-i2 .bg-off-white .bg-black *{
+  color: #fff !important;
+}
+/* Map placeholder should stay neutral */
+#list-i2 .bg-off-white .bg-gray-200,
+#list-i2 .bg-off-white .bg-gray-200 *{
+  color: rgba(255,255,255,0.55) !important;
+}
+
+/* ===== Hero model full-body: enlarge the absolute model container (was 96x96) ===== */
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+  width: 440px !important;
+  height: 560px !important;
+  right: 18px !important;
+  bottom: 0 !important;
+}
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96 img{
+  object-fit: contain !important;
+  object-position: center bottom !important; /* ensure feet visible */
+}
+
+/* Responsive: avoid covering text on small screens */
+@media (max-width: 1024px){
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+    width: 320px !important;
+    height: 420px !important;
+    right: 10px !important;
+  }
+}
+@media (max-width: 768px){
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+    width: 260px !important;
+    height: 340px !important;
+    right: 8px !important;
+  }
+}
+
+/* ===== Ensure hero labels are above the model image ===== */
+#list-i2 #hero-section .absolute.top-\[50\%\].left-\[30\%\],
+#list-i2 #hero-section .absolute.bottom-\[20\%\].left-\[15\%\]{
+  z-index: 60 !important;
+}
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+  z-index: 20 !important; /* keep model above bg but below labels */
+}
+
+/* ===== Layering adjustment: model above text labels (face/feet in front) ===== */
+#list-i2 #hero-section{
+  overflow: visible !important;
+}
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+  z-index: 90 !important; /* model above labels */
+}
+#list-i2 #hero-section .absolute.top-\[50\%\].left-\[30\%\],
+#list-i2 #hero-section .absolute.bottom-\[20\%\].left-\[15\%\]{
+  z-index: 40 !important; /* labels behind model */
+}
+
+/* ===== Fix: prevent feet clipping inside comic-border (keep model fully inside) ===== */
+#list-i2 #hero-section .col-span-7.comic-border{
+  overflow: hidden !important; /* keep frame */
+}
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+  width: 420px !important;
+  height: 520px !important;    /* reduce a bit so it fits in the frame */
+  right: 18px !important;
+  bottom: 14px !important;     /* lift slightly to avoid bottom clipping */
+  z-index: 90 !important;
+}
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96 img{
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
+@media (max-width: 1024px){
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+    width: 320px !important;
+    height: 400px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+  }
+}
+@media (max-width: 768px){
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+    width: 260px !important;
+    height: 340px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+  }
+}
+
+/* ===== Let the model feet come out in front (no clipping) ===== */
+#list-i2 #hero-section .col-span-7.comic-border{
+  overflow: visible !important;   /* allow protrusion outside the frame */
+}
+#list-i2 #hero-section{
+  padding-bottom: 90px !important; /* reserve space so protruding feet won't overlap next section */
+}
+
+/* keep the frame look on the image itself */
+#list-i2 #hero-section .col-span-7.comic-border > img{
+  border-radius: 32px !important;
+}
+
+/* place model slightly lower so feet can extend outside */
+#list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{
+  bottom: -28px !important;        /* push down out of the frame */
+  z-index: 95 !important;
+}
+@media (max-width: 1024px){
+  #list-i2 #hero-section{ padding-bottom: 70px !important; }
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{ bottom: -22px !important; }
+}
+@media (max-width: 768px){
+  #list-i2 #hero-section{ padding-bottom: 56px !important; }
+  #list-i2 #hero-section .absolute.bottom-0.right-0.w-96.h-96{ bottom: -16px !important; }
+}</style><style>
+:root { --neon-pink: #ff2bd6; }
+.text-neon-pink { color: var(--neon-pink); }
+body { background: #000; color: #fff; }
+</style><style>body{background:#000;color:#fff;} a{color:inherit;}
+
+/* Dark theme overrides for detail page (u1-based sections) */
+#studios, #features { background:#000; color:#fff; }
+#studios .serif, #features .serif { letter-spacing: .02em; }
+#studios .group, #features .group { background:#0f0f10; border:1px solid rgba(255,255,255,.08); border-radius:16px; }
+#studios .group .p-6, #features .p-6 { color:#fff; }
+#studios h2, #features h2 { color:#fff; }
+#studios p, #features p { color:rgba(255,255,255,.72); }
+#features .text-brand-blue, #features .text-neon-pink { color: var(--neon-pink); }
+</style><style>
+/* --- Fallback theme (Tailwindが効かない環境向け) --- */
+html, body { background:#000; color:#fff; }
+body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif; }
+a { color: inherit; }
+.bg-black { background:#000 !important; }
+.text-white { color:#fff !important; }
+
+/* 白背景系のクラスを強制的に黒へ */
+.bg-white, .bg-gray-50, .bg-gray-100 { background:#000 !important; }
+.text-black, .text-gray-900, .text-gray-800, .text-gray-700 { color:#fff !important; }
+.text-gray-600, .text-gray-500, .text-gray-400 { color: rgba(255,255,255,.78) !important; }
+
+/* 枠線/区切り */
+.border, .border-gray-100, .border-gray-200, .border-gray-300 { border-color: rgba(255,255,255,.18) !important; }
+hr { border-color: rgba(255,255,255,.12) !important; }
+
+/* 添付画像の赤枠（2つのリンクボックス）対策: 視認性を上げる */
+a.border-blue-200{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  width: min(420px, 100%);
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.22) !important;
+  border-radius:10px;
+  background: rgba(255,255,255,.05);
+  color:#fff !important;
+  text-decoration:none;
+}
+a.border-blue-200:hover{ background: rgba(255,255,255,.09); }
+
+/* 見出し/本文を黒背景に合わせる */
+h1,h2,h3,h4,h5,h6{ color:#fff; }
+p,li,small{ color: rgba(255,255,255,.86); }
+
+/* 画像が上にずれて表示されない/潰れないように */
+img{ max-width:100%; height:auto; display:block; }
+</style>
+
+<div class="h-10" id="section-a2"></div><section class="unified-section py-10"><div class="max-w-6xl mx-auto px-6"><section class="py-24 px-6 bg-white" id="concept">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl fade-in-up" style="animation-delay: 0.2s;">
+<img alt="cozy living room studio set with beige sofa plant sunlight casting shadows aesthetic interior design" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&amp;w=2700&amp;auto=format&amp;fit=crop"/>
+</div>
+<div class="space-y-8 fade-in-up" style="animation-delay: 0.4s;">
+<div class="inline-block px-3 py-1 bg-gray-100 text-gray-500 text-xs font-bold tracking-widest rounded-full">CONCEPT</div>
+<h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight">
+                    入稿の「わからない」を、<br/>ゼロにする。
+                </h2>
+<p class="text-gray-600 leading-relaxed text-lg">
+                    ACRY LABOは、アクリルグッズ制作サービスを比較・紹介するメディアサイトです。サービス比較・入稿ノウハウ・お役立ち記事を通じて、デザイン未経験でも安心して最適なサービスを見つけられます。
+                </p>
+<div class="grid grid-cols-2 gap-8 pt-4">
+<div>
+<h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+<i class="fa-solid fa-file-lines text-yellow-500"></i> Templates
+                        </h3>
+<p class="text-sm text-gray-500">商品別の無料テンプレートで即スタート</p>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+<i class="fa-solid fa-headset text-gray-700"></i> Support
+                        </h3>
+<p class="text-sm text-gray-500">入稿ノウハウ＆お役立ち記事が充実</p>
+</div>
+</div>
+<div class="pt-6">
+<a class="text-gray-900 font-bold border-b-2 border-gray-900 pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors" href="#">
+                        テンプレート・ガイドを見る
+                    </a>
+</div>
+</div>
+</div>
+</section></div></section><div class="h-10" id="section-a3"></div>
+<main class="relative" id="detail">
+<!-- Detail sections merged from u1/u2/u3 -->
+<section class="detail-section" id="detail-u1">
+<!-- Hero Section -->
+<section class="relative h-[800px] flex items-center justify-center overflow-hidden pt-20" id="hero">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<img alt="Hero Background" class="w-full h-full object-cover brightness-75" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&amp;w=2700&amp;auto=format&amp;fit=crop"/>
+</div>
+<!-- Content -->
+<div class="relative z-10 text-center px-4 max-w-4xl mx-auto text-white fade-in-up">
+<p class="text-lg md:text-xl font-light tracking-[0.2em] mb-4 uppercase">Submission Guide</p>
+<h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight serif">
+                入稿の基本を学ぶ、<br/>
+                アクリルグッズ制作ガイド。
+            </h1>
+<p class="text-base md:text-lg text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+                アクリルグッズ制作サービスの比較・紹介メディア。<br/>
+                サービス比較・入稿ノウハウ・お役立ち記事で、初心者でも安心のサービス選び。
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a class="bg-white text-brand-blue px-8 py-3 rounded-sm font-medium hover:bg-gray-100 transition-colors min-w-[200px]" href="#studios">
+                    テンプレートを探す
+                </a>
+<a class="border border-white text-white px-8 py-3 rounded-sm font-medium hover:bg-white/10 transition-colors min-w-[200px]" href="#contact">
+                    資料ダウンロード
+                </a>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
+<i class="fa-solid fa-chevron-down text-2xl"></i>
+</div>
+</section>
+<!-- Value Section (Based on User Image) -->
+<section class="bg-white py-0 overflow-hidden" id="value-section">
+<div class="flex flex-col lg:flex-row min-h-[700px]">
+<!-- Left Content -->
+<div class="lg:w-1/2 p-8 lg:p-20 flex flex-col justify-center bg-white order-2 lg:order-1">
+<div class="max-w-xl mx-auto lg:mx-0">
+<div class="flex items-center gap-4 mb-8 text-brand-blue font-serif">
+<span class="text-3xl italic">Value 1</span>
+<span class="text-sm text-gray-400">/4</span>
+<div class="h-[1px] w-12 bg-gray-300"></div>
+<span class="text-sm font-medium tracking-wider">入稿の基本ステップ</span>
+</div>
+<h2 class="text-2xl lg:text-3xl font-bold text-brand-blue mb-8 leading-relaxed serif">
+                        テンプレートを選んで、<br/>
+                        デザインから入稿まで
+                    </h2>
+<div class="space-y-6 text-gray-600 leading-loose text-sm lg:text-base text-justify">
+<p>
+                            商品に合ったテンプレートを選び、Illustrator・Photoshop・PNGで自由にデザイン。入稿データの解像度・カラーモード・塗り足しなど、つまずきやすいポイントはガイド記事でカバー。完成したデータはチェックリストで確認し、安心して入稿できます。
+                        </p>
+</div>
+<div class="mt-12">
+<p class="text-brand-blue font-medium mb-4 text-sm">サービス・詳細はこちら</p>
+<div class="flex flex-col gap-3">
+<a class="group flex items-center justify-between border border-blue-200 px-6 py-4 rounded hover:bg-blue-50 transition-all duration-300 w-full max-w-sm" href="#">
+<span class="text-brand-blue font-medium group-hover:translate-x-1 transition-transform">テンプレート一覧</span>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs text-brand-blue"></i>
+</a>
+<a class="group flex items-center justify-between border border-blue-200 px-6 py-4 rounded hover:bg-blue-50 transition-all duration-300 w-full max-w-sm" href="#">
+<span class="text-brand-blue font-medium group-hover:translate-x-1 transition-transform">おすすめサービス一覧</span>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs text-brand-blue"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Image -->
+<div class="lg:w-1/2 h-[400px] lg:h-auto relative order-1 lg:order-2">
+<img alt="Historic Building" class="absolute inset-0 w-full h-full object-cover" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=" style=";object-fit:cover;"/>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent lg:hidden"></div>
+</div>
+</div>
+</section>
+<!-- Studios Grid Section -->
+
+<!-- ===== ACRY LABO SERVICE INFO ===== -->
+<section class="py-16 border-t border-white/10 bg-black" id="rawr-info">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex items-end justify-between gap-6 flex-wrap">
+      <div>
+        <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">STUDIO PROFILE</div>
+        <h2 class="text-4xl font-semibold mt-2">ACRY LABO メディア概要</h2>
+        <p class="text-white/70 mt-3">アクリルグッズ制作サービスを比較・紹介するメディア。サービス比較から入稿ノウハウまで、制作に必要な情報をカバーします。</p>
+      </div>
+      <a class="inline-flex items-center gap-2 bg-neon-pink text-black px-6 py-3 rounded-full font-bold hover:opacity-90 transition" href="#contact">
+        お問い合わせ <i class="fa-regular fa-calendar-check"></i>
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-4">基本情報</h3>
+        <dl class="space-y-3 text-sm text-white/80">
+          <div class="flex justify-between gap-4"><dt class="text-white/60">サイト形態</dt><dd class="text-right">Webメディア</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">対応商品</dt><dd class="text-right">キーホルダー／スタンド／ネームプレート他</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">対応ファイル形式</dt><dd class="text-right">AI・PSD・PDF・PNG・JPG</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">掲載サービス数</dt><dd class="text-right">30社以上（順次追加）</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">更新頻度</dt><dd class="text-right">毎週更新</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">記事カテゴリ</dt><dd class="text-right">比較・レビュー・ノウハウ</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">掲載申請</dt><dd class="text-right">随時受付中</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">運営</dt><dd class="text-right">ACRY LABO編集部</dd></div>
+        </dl>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-4">編集方針</h3>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li>中立・公正なサービス比較</li>
+          <li>実際の利用者の声を反映</li>
+          <li>最新情報を毎週更新</li>
+          <li>初心者目線のわかりやすい解説</li>
+        </ul>
+        <p class="text-white/50 text-xs mt-4">※ 掲載情報は定期的に見直しています。</p>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-4">コンテンツカテゴリ</h3>
+        <dl class="space-y-3 text-sm text-white/80">
+          <div class="flex justify-between gap-4"><dt class="text-white/60">サービス比較</dt><dd class="text-right">料金・品質・納期で比較</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">レビュー記事</dt><dd class="text-right">実際の利用体験レポート</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">入稿ノウハウ</dt><dd class="text-right">初心者向け入稿ガイド</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-white/60">最新ニュース</dt><dd class="text-right">新サービス・特集情報</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 border-t border-white/10 bg-black" id="rawr-features">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">HIGHLIGHTS</div>
+    <h2 class="text-3xl font-semibold mt-2">サービスの特徴</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-2">豊富な比較記事</h3>
+        <p class="text-white/70 text-sm leading-relaxed">商品別・目的別のサービス比較記事を豊富に掲載。料金・納期・品質など多角的な比較で、最適なサービスが見つかります。</p>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-2">初心者にやさしいガイド記事</h3>
+        <p class="text-white/70 text-sm leading-relaxed">入稿データの作り方をステップバイステップで解説。解像度・カラーモード・塗り足しなど、つまずきやすいポイントを丁寧にカバーします。</p>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-2">幅広い用途に対応</h3>
+        <p class="text-white/70 text-sm leading-relaxed">同人グッズ、ノベルティ、販促品、推し活グッズなど、あらゆるシーンのアクリルグッズ制作をサポートします。</p>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-2">中立・公正な情報提供</h3>
+        <p class="text-white/70 text-sm leading-relaxed">特定のサービスに偏らない中立的な比較情報を提供。初心者から法人まで、目的に合ったサービス選びをサポートします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 border-t border-white/10 bg-black" id="rawr-equipment">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">FILE FORMATS</div>
+    <h2 class="text-3xl font-semibold mt-2">掲載サービスのカテゴリ</h2>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-sm text-white/80">
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">アクリルキーホルダー制作</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">アクリルスタンド制作</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">ネームプレート・表札</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">アクリルブロック・フォトフレーム</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">アクリルコースター</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">ノベルティ・販促グッズ</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">同人グッズ・推し活グッズ</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">法人向け大量注文</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">デザイン代行付きサービス</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-16 border-t border-white/10 bg-black" id="rawr-rules">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">RULES</div>
+    <h2 class="text-3xl font-semibold mt-2">サービス利用時の注意点</h2>
+
+    <div class="mt-8 grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-4">サービス選びのチェックポイント</h3>
+        <ul class="space-y-2 text-sm text-white/80 list-disc pl-5">
+          <li>対応商品の種類とサイズ</li>
+          <li>料金体系（最低注文数・送料の有無）</li>
+          <li>納期（通常・特急対応の可否）</li>
+          <li>入稿データの形式・仕様</li>
+          <li>デザインサポートの有無</li>
+          <li>口コミ・実績の確認</li>
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-[#0f0f10] p-6">
+        <h3 class="text-lg font-bold mb-4">ご利用にあたって</h3>
+        <ul class="space-y-2 text-sm text-white/80 list-disc pl-5">
+          <li>掲載情報は各サービスの公式情報に基づいています</li>
+          <li>料金・納期等は変更される場合があります</li>
+          <li>ご注文前に必ず各サービスの公式サイトをご確認ください</li>
+          <li>当サイトは紹介・比較メディアであり、サービス提供者ではありません</li>
+          <li>掲載サービスへのお問い合わせは各サービスへ直接お願いします</li>
+          <li>掲載情報の正確性には万全を期していますが、保証するものではありません</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 border-t border-white/10 bg-black" id="rawr-usecases">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">USE CASES</div>
+    <h2 class="text-3xl font-semibold mt-2">こんな方におすすめ</h2>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 text-sm text-white/80">
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">初めてアクリルグッズを作る方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">サービスの料金を比較したい方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">法人でノベルティを検討中の方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">入稿データの作り方を知りたい方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">推し活グッズを作りたい方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">小ロットから注文できるサービスを探す方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">デザイン代行付きサービスを探す方</div>
+      <div class="rounded-2xl border border-white/10 bg-[#0f0f10] p-5">品質の高いサービスを選びたい方</div>
+    </div>
+  </div>
+</section>
+<!-- ===== /ACRY LABO SERVICE INFO ===== -->
+
+<section class="py-24 bg-black text-white" id="studios">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl font-bold text-white mb-4 serif">Our Services</h2>
+<p class="text-white/70 max-w-2xl mx-auto">
+                    用途やご予算に合わせて選べる、おすすめのサービスを紹介しています。
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Studio Card 1 -->
+<div class="group bg-[#0f0f10] rounded-lg overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:shadow-[0_26px_80px_rgba(0,0,0,0.65)] transition-all duration-300 transform hover:-translate-y-1" id="studio-card-1">
+<div class="relative h-64 overflow-hidden">
+<img alt="Studio A" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&amp;w=2070&amp;auto=format&amp;fit=crop"/>
+<div class="absolute top-4 left-4 bg-black/70 px-3 py-1 text-xs font-bold tracking-wider uppercase text-white">FREE</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold text-white mb-2 serif">小ロット対応サービス</h3>
+<p class="text-white/70 text-sm mb-4 line-clamp-2">1個から注文OK。個人クリエイターや同人活動にぴったりのサービスを厳選紹介。</p>
+<div class="flex items-center justify-between border-t border-gray-100 pt-4">
+<div class="flex items-center gap-4 text-sm text-white/70">
+<span><i class="fa-regular fa-square mr-1"></i> 120㎡</span>
+<span><i class="fa-solid fa-users mr-1"></i> ~30名</span>
+</div>
+<span class="text-neon-pink font-medium text-sm group-hover:underline">詳細を見る</span>
+</div>
+</div>
+</div>
+<!-- Studio Card 2 -->
+<div class="group bg-[#0f0f10] rounded-lg overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:shadow-[0_26px_80px_rgba(0,0,0,0.65)] transition-all duration-300 transform hover:-translate-y-1" id="studio-card-2">
+<div class="relative h-64 overflow-hidden">
+<img alt="Studio B" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&amp;w=2070&amp;auto=format&amp;fit=crop"/>
+<div class="absolute top-4 left-4 bg-black/70 px-3 py-1 text-xs font-bold tracking-wider uppercase text-white">STANDARD</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold text-white mb-2 serif">高品質サービス</h3>
+<p class="text-white/70 text-sm mb-4 line-clamp-2">印刷品質・仕上がりに定評のあるサービスを比較。入稿サポート付きのサービスも紹介。</p>
+<div class="flex items-center justify-between border-t border-gray-100 pt-4">
+<div class="flex items-center gap-4 text-sm text-white/70">
+<span><i class="fa-regular fa-square mr-1"></i> 180㎡</span>
+<span><i class="fa-solid fa-users mr-1"></i> ~50名</span>
+</div>
+<span class="text-neon-pink font-medium text-sm group-hover:underline">詳細を見る</span>
+</div>
+</div>
+</div>
+<!-- Studio Card 3 -->
+<div class="group bg-[#0f0f10] rounded-lg overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:shadow-[0_26px_80px_rgba(0,0,0,0.65)] transition-all duration-300 transform hover:-translate-y-1" id="studio-card-3">
+<div class="relative h-64 overflow-hidden">
+<img alt="Studio C" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1556912173-3db996ea0667?q=80&amp;w=2070&amp;auto=format&amp;fit=crop"/>
+<div class="absolute top-4 left-4 bg-black/70 px-3 py-1 text-xs font-bold tracking-wider uppercase text-white">PREMIUM</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold text-white mb-2 serif">法人・大量注文向け</h3>
+<p class="text-white/70 text-sm mb-4 line-clamp-2">法人向けノベルティ・販促グッズに強いサービスを比較。大量注文で割引のあるサービスも。</p>
+<div class="flex items-center justify-between border-t border-gray-100 pt-4">
+<div class="flex items-center gap-4 text-sm text-white/70">
+<span><i class="fa-regular fa-square mr-1"></i> 250㎡</span>
+<span><i class="fa-solid fa-users mr-1"></i> ~100名</span>
+</div>
+<span class="text-neon-pink font-medium text-sm group-hover:underline">詳細を見る</span>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a class="inline-flex items-center gap-2 text-white font-medium hover:text-brand-blue transition-colors border-b border-gray-900 hover:border-brand-blue pb-1" href="#">
+                    すべてのプランを見る <i class="fa-solid fa-arrow-right text-sm"></i>
+</a>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-24 bg-black text-white" id="features">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="grid grid-cols-2 gap-4">
+<img alt="Feature 1" class="w-full h-64 object-cover rounded-lg translate-y-8 shadow-lg" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&amp;w=2070&amp;auto=format&amp;fit=crop"/>
+<img alt="Feature 2" class="w-full h-64 object-cover rounded-lg shadow-lg" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&amp;w=2532&amp;auto=format&amp;fit=crop"/>
+</div>
+<!-- Decorative Circle -->
+<div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-white/5 rounded-full opacity-50 blur-3xl"></div>
+</div>
+<div class="pl-0 md:pl-10">
+<span class="text-neon-pink font-bold tracking-wider uppercase text-sm mb-2 block">Why Choose Us</span>
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-6 serif leading-tight">
+                        あなたに最適なサービスが<br/>
+                        きっと見つかる
+                    </h2>
+<div class="space-y-8">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-neon-pink">
+<i class="fa-solid fa-camera text-xl"></i>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white mb-2">豊富な比較記事とレビュー</h3>
+<p class="text-white/70 text-sm leading-relaxed">
+                                    商品別のサービス比較記事、実際の利用者レビュー、料金・納期の一覧表など、サービス選びに役立つ情報が充実。
+                                </p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-neon-pink">
+<i class="fa-solid fa-couch text-xl"></i>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white mb-2">初心者にやさしいガイド</h3>
+<p class="text-white/70 text-sm leading-relaxed">
+                                    入稿データの作り方をステップバイステップで解説。つまずきやすいポイントを丁寧にカバーします。
+                                </p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-neon-pink">
+<i class="fa-solid fa-calendar-check text-xl"></i>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white mb-2">常に最新の情報を掲載</h3>
+<p class="text-white/70 text-sm leading-relaxed">
+                                    編集部が定期的にサービス情報を更新。新サービスの追加や料金改定もいち早くお届けします。
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery/Use Cases Slider (Static Mockup) -->
+<section class="py-16 border-t border-white/10 bg-black" id="gallery">
+<div class="max-w-6xl mx-auto px-6">
+<div class="flex items-end justify-between gap-6">
+<div>
+<div class="font-mono text-xs tracking-[0.4em] text-neon-pink">GALLERY</div>
+<h2 class="text-4xl font-semibold mt-2">Gallery</h2>
+<p class="text-white/70 mt-2">ご利用シーンのイメージ</p>
+</div>
+<a class="hidden sm:inline-flex text-sm text-white/70 hover:text-white transition" href="#contact">お問い合わせへ →</a>
+</div>
+<div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 1" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&amp;w=2069&amp;auto=format&amp;fit=crop"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 01</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 2" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b9ead96a52-9cc24a2463581d581a02.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 02</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 3" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/491ad0bc58-139ee62d02a314524746.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 03</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 4" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/54d088c2db-56809932026a94489f38.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 04</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 5" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1063dbdbce-dec66770257d042ea37f.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 05</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 6" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/984ac7b430-b07b10401a0bf726b169.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 06</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 7" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8908dd2c44-bbf6863d5b3e127182ca.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 07</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 8" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/075ab2a476-836ea5d00ffff6f8b10b.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 08</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 9" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/a32dc9ef2e-55b1c015d30220f827f9.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 09</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 10" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ec9da232e9-948e0d46ae1f650d07ed.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 10</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 11" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/290032b0d9-a4880f342a0b4d866bdf.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 11</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 12" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/baa3e01065-1d4eec3a8c107a69725f.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 12</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 13" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5a26c6ea06-ab73d8e52bf79305efae.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 13</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 14" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/54dd05156e-14a0090a66f417fcfe8a.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 14</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 15" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/48550dd434-5f53c413359b86483b85.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 15</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 16" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5db1193d6a-a919bdb9af9ed0428cde.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 16</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure><figure class="group relative rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+<img alt="gallery 17" class="w-full h-[320px] object-cover group-hover:scale-[1.03] transition duration-500" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxMTEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzMzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iNiIgb3BhY2l0eT0iMC42NSI+CiAgICA8cmVjdCB4PSIyMjAiIHk9IjE2MCIgd2lkdGg9IjExNjAiIGhlaWdodD0iNjIwIiByeD0iMzIiLz4KICAgIDxwYXRoIGQ9Ik0zNjAgNzIwIFYzMjAgTDgwMCAyMjAgTDEyNDAgMzIwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNTIwIDcyMCBWNDIwIEgxMDgwIFY3MjAiIC8+CiAgICA8cGF0aCBkPSJNNjQwIDcyMCBWNTIwIEg5NjAgVjcyMCIgLz4KICA8L2c+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgU2Vnb2UgVUksIFJvYm90bywgSGVsdmV0aWNhLCBBcmlhbCIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjgwMCI+CiAgICBIaXN0b3JpYyBCdWlsZGluZwogIDwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTkwIiBmaWxsPSIjY2ZjZmNmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBTZWdvZSBVSSwgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsIiBmb250LXNpemU9IjI4Ij4KICAgIEltYWdlIHBsYWNlaG9sZGVyIChyZXBsYWNlIHNyYyB3aXRoIHlvdXIgYXNzZXQpCiAgPC90ZXh0Pgo8L3N2Zz4=';" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/028b5b7e2a-3328aac862a1b4558a76.png"/>
+<figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<div class="flex items-center justify-between gap-3">
+<div class="text-sm font-semibold">Scene 17</div>
+<div class="text-xs text-white/70">View</div>
+</div>
+</figcaption>
+</figure></div>
+</div>
+</section></section></main>
+
+<?php get_footer(); ?>

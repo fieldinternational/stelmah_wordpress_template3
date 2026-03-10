@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>top_html</title><script src="https://cdn.tailwindcss.com"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Noto+Sans+JP:wght@300;400;500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/><script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'neon-pink': '#FF00FF',
+        'dark-bg': '#111111',
+        'card-bg': '#1a1a1a',
+        'grid-line': '#2a2a2a',
+      },
+      fontFamily: {
+        sans: ['Inter','Noto Sans JP','sans-serif'],
+        mono: ['Space Mono','Courier New','monospace'],
+      }
+    }
+  }
+};
+window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+</script><style id="unified-style">
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:#0f0f0f; }
+::-webkit-scrollbar-thumb{ background:#FF00FF; border-radius:6px; }
+
+html,body{ height:100%; }
+body{
+  background:#111;
+  color:#eee;
+  font-family: Inter,'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ color:#fff; }
+a{ color:#fff; }
+a:hover{ color:#FF00FF; }
+
+.unified-section{
+  background:#111;
+  color:#eee;
+}
+.unified-section .bg-white,
+.unified-section .bg-gray-50,
+.unified-section .bg-gray-100{
+  background:#1a1a1a !important;
+}
+.unified-section .text-gray-900,
+.unified-section .text-gray-800,
+.unified-section .text-gray-700{
+  color:#fff !important;
+}
+.unified-section .text-gray-600,
+.unified-section .text-gray-500,
+.unified-section .text-gray-400,
+.unified-section .text-studio-text,
+.unified-section .text-studio-muted{
+  color:rgba(255,255,255,0.72) !important;
+}
+.unified-section .border-gray-100,
+.unified-section .border-gray-200,
+.unified-section .border-gray-300{
+  border-color:rgba(255,255,255,0.12) !important;
+}
+.unified-section .shadow-lg,
+.unified-section .shadow-xl,
+.unified-section .shadow-2xl{
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45) !important;
+}
+
+.unified-section a.bg-studio-accent,
+.unified-section button.bg-studio-accent,
+.unified-section a.bg-gray-900,
+.unified-section a.bg-black,
+.unified-section button.bg-black{
+  background:#FF00FF !important;
+  color:#000 !important;
+}
+.unified-section a.border-studio-accent,
+.unified-section a.border-black,
+.unified-section .border-studio-accent{
+  border-color:#FF00FF !important;
+}
+.unified-section a.text-studio-accent,
+.unified-section i.text-studio-accent{
+  color:#FF00FF !important;
+}
+
+.top-hero{ position:relative; padding-top:88px; }
+.top-slider{ position:relative; overflow:hidden; border-radius:24px; background:#0b0b0b; }
+.top-slider-track{ display:flex; transition:transform 520ms ease; will-change:transform; }
+.top-slide{ min-width:100%; }
+.top-slide img{ width:100%; height:clamp(320px,44vw,640px); object-fit:cover; display:block; filter:grayscale(100%); transition:filter 400ms ease; }
+.top-slider:hover .top-slide img{ filter:grayscale(0%); }
+.top-slider-dots{
+  position:absolute; left:0; right:0; bottom:14px;
+  display:flex; justify-content:center; align-items:center;
+  gap:10px; padding:0 12px;
+}
+.top-dot{
+  width:10px; height:10px; border-radius:999px; border:0;
+  background:rgba(255,255,255,0.45);
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  cursor:pointer;
+}
+.top-dot.is-active{ background:rgba(255,255,255,0.92); transform:scale(1.15); }
+.top-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(0,0,0,0.25);
+  color:white; font-size:26px; line-height:40px;
+  cursor:pointer; opacity:0;
+  transition:opacity 200ms ease, background 200ms ease;
+}
+.top-prev{ left:14px; }
+.top-next{ right:14px; }
+.top-slider:hover .top-arrow{ opacity:1; }
+.top-arrow:hover{ background:rgba(255,255,255,0.15); }
+
+@media (prefers-reduced-motion: reduce){
+  .top-slider-track{ transition:none; }
+}
+</style></head><body><header class="fixed top-0 left-0 w-full z-50 pointer-events-none mix-blend-difference text-white p-6 flex justify-between items-start"><div class="font-mono text-sm tracking-widest"><span class="block">ACRY LABO</span><span class="block text-xs opacity-70">ACRYLIC GOODS MEDIA</span></div><div class="pointer-events-auto flex items-center gap-3"><nav class="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.35em] uppercase opacity-90"><a href="index.html" class="hover:text-neon-pink transition-colors">TOP</a><a href="articles.html" class="hover:text-neon-pink transition-colors">ARTICLES</a><a href="guide.html" class="hover:text-neon-pink transition-colors">GUIDE</a><a href="about.html" class="hover:text-neon-pink transition-colors">ABOUT</a><a href="privacy.html" class="hover:text-neon-pink transition-colors">PRIVACY</a><a href="news.html" class="hover:text-neon-pink transition-colors">NEWS</a><a href="#" class="hover:text-neon-pink transition-colors">SERVICE</a></nav><div class="text-xs opacity-80 font-mono" id="topClock">--:--</div><a class="bg-neon-pink text-black hover:bg-white px-4 py-2 font-bold uppercase text-xs tracking-widest transition-colors" href="#contact">お問い合わせ</a></div></header><div class="h-10" id="section-a2"></div><section class="unified-section py-10"><div class="max-w-6xl mx-auto px-6"><section class="py-24 px-6 bg-white" id="concept">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl fade-in-up" style="animation-delay: 0.2s;">
+<img alt="cozy living room studio set with beige sofa plant sunlight casting shadows aesthetic interior design" class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b7dd9769ea-10a21384b6281b66ef5e.png"/>
+</div>
+<div class="space-y-8 fade-in-up" style="animation-delay: 0.4s;">
+<div class="inline-block px-3 py-1 bg-gray-100 text-gray-500 text-xs font-bold tracking-widest rounded-full">CONCEPT</div>
+<h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight">
+                    テンプレートで始める、<br/>
+                    アクリルグッズ制作。
+                </h2>
+<p class="text-gray-600 leading-relaxed text-lg">
+                    ACRY LABOは、アクリルグッズ制作サービスを比較・紹介するメディアサイトです。サービス比較、最新情報、入稿ノウハウ記事を通じて、初心者でも最適なサービスを見つけられるようサポートします。
+                </p>
+<div class="grid grid-cols-2 gap-8 pt-4">
+<div>
+<h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+<i class="fa-regular fa-file-lines text-yellow-500"></i> Templates
+                        </h3>
+<p class="text-sm text-gray-500">各サービスの特徴を比較できる</p>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+<i class="fa-solid fa-headset text-gray-700"></i> Support
+                        </h3>
+<p class="text-sm text-gray-500">入稿ノウハウ＆お役立ち記事が充実</p>
+</div>
+</div>
+<div class="pt-6">
+<a class="text-gray-900 font-bold border-b-2 border-gray-900 pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors" href="#">
+                        READ MORE ABOUT US
+                    </a>
+</div>
+</div>
+</div>
+</section><section class="py-24 px-6 bg-studio-bg" id="spaces">
+<div class="max-w-[1440px] mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Service Highlights</h2>
+<p class="text-gray-500">アクリルグッズ制作に役立つ情報をお届け</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Space 1 -->
+<div class="group cursor-pointer fade-in-up" style="animation-delay: 0.1s;">
+<div class="h-[400px] overflow-hidden rounded-xl mb-6 relative">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold rounded-full z-10">
+                            HIGHLIGHT 01
+                        </div>
+<img alt="modern scandinavian living room studio space white wood floor bright airy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/802cb10f23-92e135d8e3a0fd503b14.png"/>
+</div>
+<h3 class="text-2xl font-serif font-bold mb-2 group-hover:text-gray-600 transition-colors">サービス比較</h3>
+<p class="text-gray-500 text-sm leading-relaxed mb-4">
+                        人気のアクリルグッズ制作サービスを徹底比較。料金・納期・対応商品などの項目で、あなたに最適なサービスが見つかります。
+                    </p>
+<span class="text-xs font-bold tracking-widest border-b border-gray-300 pb-1 group-hover:border-black transition-all">VIEW DETAILS</span>
+</div>
+<!-- Space 2 -->
+<div class="group cursor-pointer fade-in-up" style="animation-delay: 0.2s;">
+<div class="h-[400px] overflow-hidden rounded-xl mb-6 relative">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold rounded-full z-10">
+                            HIGHLIGHT 02
+                        </div>
+<img alt="white artist atelier studio space concrete floor large windows minimalist creative workspace" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/718f9de37c-95d159c3d592ea55aa77.png"/>
+</div>
+<h3 class="text-2xl font-serif font-bold mb-2 group-hover:text-gray-600 transition-colors">入稿ノウハウ</h3>
+<p class="text-gray-500 text-sm leading-relaxed mb-4">
+                        入稿データの作り方をステップバイステップで解説。解像度・カラーモード・塗り足しなど、つまずきやすいポイントをカバーします。
+                    </p>
+<span class="text-xs font-bold tracking-widest border-b border-gray-300 pb-1 group-hover:border-black transition-all">VIEW DETAILS</span>
+</div>
+<!-- Space 3 -->
+<div class="group cursor-pointer fade-in-up" style="animation-delay: 0.3s;">
+<div class="h-[400px] overflow-hidden rounded-xl mb-6 relative">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold rounded-full z-10">
+                            HIGHLIGHT 03
+                        </div>
+<img alt="rooftop garden terrace with wood deck plants blue sky outdoor furniture city view" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/55db589888-1fbf3f0869802b1039f5.png"/>
+</div>
+<h3 class="text-2xl font-serif font-bold mb-2 group-hover:text-gray-600 transition-colors">おすすめサービス紹介</h3>
+<p class="text-gray-500 text-sm leading-relaxed mb-4">
+                        編集部が厳選した、初心者でも使いやすいおすすめサービスを紹介。目的別・予算別にぴったりのサービスが見つかります。
+                    </p>
+<span class="text-xs font-bold tracking-widest border-b border-gray-300 pb-1 group-hover:border-black transition-all">VIEW DETAILS</span>
+</div>
+</div>
+</div>
+</section><section class="py-24 bg-[#BCC5CE]" id="news">
+<div class="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 md:gap-24">
+<!-- News Header Column -->
+<div class="md:w-1/4 flex flex-col justify-between min-h-[300px]">
+<div>
+<h2 class="text-5xl md:text-6xl font-bold text-white tracking-wide mb-8">NEWS</h2>
+</div>
+<div class="mt-auto">
+<a class="group inline-flex items-center gap-4 text-white font-bold text-lg hover:opacity-80 transition-opacity" href="#">
+<span class="border-b border-white pb-1">お知らせ一覧</span>
+<span class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#BCC5CE] group-hover:scale-110 transition-transform duration-300">
+<i class="fa-solid fa-arrow-right text-sm"></i>
+</span>
+</a>
+</div>
+</div>
+<!-- News Items Column -->
+<div class="md:w-3/4 grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Item 1 -->
+<article class="flex flex-col h-full group cursor-pointer">
+<div class="mb-6 overflow-hidden rounded-full w-40 h-40 md:w-48 md:h-48">
+<img alt="minimalistic pastel blue logo sign on wall modern clean design" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f0d5eb2248-358734ac9f93d5fec5af.png"/>
+</div>
+<div class="flex flex-col flex-grow">
+<time class="text-white/80 text-sm font-medium mb-2 block">2026.01.08</time>
+<h3 class="text-white text-xl md:text-2xl font-bold leading-snug mb-4">ACRY LABOサイト公開のお知らせ</h3>
+<div class="mt-auto pt-4 border-t border-white/30 flex justify-between items-center">
+<span class="text-white/90 text-sm font-medium"># お知らせ</span>
+<span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+</div>
+</div>
+</article>
+<!-- Item 2 -->
+<article class="flex flex-col h-full group cursor-pointer">
+<div class="mb-6 overflow-hidden rounded-full w-40 h-40 md:w-48 md:h-48">
+<img alt="office interior sign recruitment poster modern workplace" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d7edf67ad6-ff3fb3f30f1f143ef14a.png"/>
+</div>
+<div class="flex flex-col flex-grow">
+<time class="text-white/80 text-sm font-medium mb-2 block">2025.12.24</time>
+<h3 class="text-white text-xl md:text-2xl font-bold leading-snug mb-4">テンプレート第一弾リリースのお知らせ</h3>
+<div class="mt-auto pt-4 border-t border-white/30 flex justify-between items-center">
+<span class="text-white/90 text-sm font-medium"># テンプレート</span>
+<span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+</div>
+</div>
+</article>
+<!-- Item 3 -->
+<article class="flex flex-col h-full group cursor-pointer">
+<div class="mb-6 overflow-hidden rounded-full w-40 h-40 md:w-48 md:h-48">
+<img alt="studio hallway corridor modern interior architecture perspective" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/fed35a3ff4-8acd50eba50f831f07ac.png"/>
+</div>
+<div class="flex flex-col flex-grow">
+<time class="text-white/80 text-sm font-medium mb-2 block">2025.12.01</time>
+<h3 class="text-white text-xl md:text-2xl font-bold leading-snug mb-4">入稿ガイド記事を公開しました</h3>
+<div class="mt-auto pt-4 border-t border-white/30 flex justify-between items-center">
+<span class="text-white/90 text-sm font-medium"># お知らせ</span>
+<span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section><section class="py-24 px-6 bg-white" id="features">
+<div class="max-w-[1440px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-100 pb-8">
+<div>
+<h2 class="text-3xl md:text-4xl font-serif font-bold mb-2">Tools &amp; Support</h2>
+<p class="text-gray-500">アクリルグッズ制作に役立つコンテンツ</p>
+</div>
+<a class="hidden md:block text-sm font-bold tracking-widest hover:text-gray-600 transition-colors" href="#">DOWNLOAD PDF GUIDE <i class="fa-solid fa-download ml-2"></i></a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm mb-6 group-hover:bg-gray-900 group-hover:text-white transition-colors">
+<i class="fa-solid fa-file-lines"></i>
+</div>
+<h3 class="font-bold text-lg mb-2">Free Templates</h3>
+<p class="text-sm text-gray-500">各サービスが提供するテンプレート情報をまとめています。</p>
+</div>
+<div class="p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm mb-6 group-hover:bg-gray-900 group-hover:text-white transition-colors">
+<i class="fa-solid fa-list-check"></i>
+</div>
+<h3 class="font-bold text-lg mb-2">入稿チェックツール</h3>
+<p class="text-sm text-gray-500">入稿データのセルフチェックリスト。解像度・カラーモード・塗り足しを確認できます。</p>
+</div>
+<div class="p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm mb-6 group-hover:bg-gray-900 group-hover:text-white transition-colors">
+<i class="fa-solid fa-book-open"></i>
+</div>
+<h3 class="font-bold text-lg mb-2">チュートリアル</h3>
+<p class="text-sm text-gray-500">Illustrator・Photoshopの操作方法を、初心者向けにステップバイステップで解説。</p>
+</div>
+<div class="p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm mb-6 group-hover:bg-gray-900 group-hover:text-white transition-colors">
+<i class="fa-solid fa-headset"></i>
+</div>
+<h3 class="font-bold text-lg mb-2">まとめ記事</h3>
+<p class="text-sm text-gray-500">目的別・予算別のサービスまとめ記事を掲載。はじめてのアクリルグッズ制作でも迷わず選べます。</p>
+</div>
+</div>
+</div>
+</section></div></section><div class="h-10" id="section-a3"></div><section class="unified-section py-10"><div class="max-w-6xl mx-auto px-6"><section class="py-24 bg-white" id="topics">
+<div class="max-w-7xl mx-auto px-6">
+<!-- Section Header -->
+<div class="flex justify-between items-end mb-16">
+<div class="flex items-baseline gap-4">
+<h2 class="text-6xl font-serif font-bold text-black">Topics</h2>
+<span class="text-sm font-medium text-gray-500 tracking-wider">トピックス</span>
+</div>
+<a class="hidden md:flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-sm font-bold hover:bg-gray-800 transition" href="#">
+                    一覧を見る <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Large Featured Item (Left) -->
+<div class="group cursor-pointer" id="featured-topic">
+<div class="h-[400px] w-full bg-gray-100 rounded-2xl overflow-hidden mb-6 relative">
+<img alt="modern minimalist logo design on a clean white wall in a studio setting, soft shadows" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/353e78ba52-1d5b6678bb0e5921fdad.png"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-serif text-6xl italic text-gray-800">New Guide</span>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-2xl font-bold leading-snug group-hover:text-gray-600 transition">
+                            入稿完全ガイドを公開。<br/>
+                            初心者でも安心のステップバイステップ解説。
+                        </h3>
+<div class="flex items-center justify-between border-t border-gray-200 pt-4 mt-4">
+<span class="text-sm font-mono text-gray-500">2025.12.03</span>
+<span class="px-3 py-1 bg-gray-100 text-xs text-gray-600 rounded-md">#入稿ガイド</span>
+</div>
+</div>
+</div>
+<!-- List Items (Right) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+<!-- Item 1 -->
+<div class="group cursor-pointer" id="topic-item-1">
+<div class="h-48 w-full bg-gray-50 rounded-lg overflow-hidden mb-4 flex items-center justify-center p-8">
+<img alt="logo of a camera brand partnership, minimal black text logo" class="w-full h-full object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c7523d9554-1210a00941b1c94957cb.png"/>
+</div>
+<h4 class="text-sm font-bold mb-2 leading-relaxed h-10 overflow-hidden">
+                            アクリルスタンド用テンプレートを追加。全サイズ対応のAI・PSD形式。
+                        </h4>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs font-mono text-gray-400">2025.06.02</span>
+<span class="px-2 py-1 bg-gray-50 text-[10px] text-gray-500 rounded">#テンプレート</span>
+</div>
+</div>
+<!-- Item 2 (Gradient Border Style) -->
+<div class="group cursor-pointer" id="topic-item-2">
+<div class="gradient-border-card h-48 w-full mb-4 flex flex-col items-center justify-center p-6 text-center">
+<span class="text-sm font-bold text-gray-400 mb-1">Comparison</span>
+<span class="text-xl font-bold">春のおすすめサービス</span>
+<span class="text-2xl font-bold mt-1">TOP 5</span>
+</div>
+<h4 class="text-sm font-bold mb-2 leading-relaxed">
+                            【最新版】春のおすすめアクリルグッズサービスTOP5を徹底比較。
+                        </h4>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs font-mono text-gray-400">2025.05.01</span>
+<span class="px-2 py-1 bg-gray-50 text-[10px] text-gray-500 rounded">#サービス比較</span>
+</div>
+</div>
+<!-- Item 3 (Gradient Border Style) -->
+<div class="group cursor-pointer" id="topic-item-3">
+<div class="gradient-border-card h-48 w-full mb-4 flex flex-col items-center justify-center p-6 text-center">
+<span class="text-sm font-bold text-gray-400 mb-1">Tutorial</span>
+<span class="text-xl font-bold">チュートリアル</span>
+<span class="text-2xl font-bold mt-1">#02</span>
+</div>
+<h4 class="text-sm font-bold mb-2 leading-relaxed">
+                            TUTORIAL | Photoshopでアクリルスタンドをデザインする方法
+                        </h4>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs font-mono text-gray-400">2025.05.01</span>
+<span class="px-2 py-1 bg-gray-50 text-[10px] text-gray-500 rounded">#Photoshop</span>
+</div>
+</div>
+<!-- Item 4 (Gradient Border Style) -->
+<div class="group cursor-pointer" id="topic-item-4">
+<div class="gradient-border-card h-48 w-full mb-4 flex flex-col items-center justify-center p-6 text-center">
+<span class="text-sm font-bold text-gray-400 mb-1">Tutorial</span>
+<span class="text-xl font-bold">チュートリアル</span>
+<span class="text-2xl font-bold mt-1">#01</span>
+</div>
+<h4 class="text-sm font-bold mb-2 leading-relaxed">
+                            TUTORIAL | Illustratorで入稿データを作成する基本手順
+                        </h4>
+<div class="flex items-center justify-between mt-2">
+<span class="text-xs font-mono text-gray-400">2025.05.01</span>
+<span class="px-2 py-1 bg-gray-50 text-[10px] text-gray-500 rounded">#Illustrator</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 md:hidden text-center">
+<a class="inline-flex items-center gap-2 bg-black text-white px-8 py-3 rounded-full text-sm font-bold hover:bg-gray-800 transition" href="#">
+                    一覧を見る <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</section><section class="py-24 bg-gray-50" id="studios">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+<div>
+<h2 class="text-5xl font-serif font-bold text-black mb-4">Product Guide</h2>
+<p class="text-gray-500 max-w-md">
+                        当サイトが厳選したアクリルグッズ。<br/>
+                        それぞれの商品に最適なサービスを紹介しています。
+                    </p>
+</div>
+<div class="mt-6 md:mt-0">
+<div class="flex gap-2">
+<button class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></button>
+<button class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition"><i class="fa-solid fa-arrow-right"></i></button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Studio 1 -->
+<div class="group" id="studio-card-1">
+<div class="h-[500px] overflow-hidden rounded-xl relative mb-6">
+<img alt="bright white living room studio set with beige sofa, plants, soft sunlight through curtains" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f3c52d697e-433db41e8e404f53a98f.png"/>
+<div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded text-xs font-bold uppercase tracking-wider">
+                            Room A
+                        </div>
+</div>
+<h3 class="text-2xl font-bold mb-2">アクリルキーホルダー</h3>
+<p class="text-gray-500 text-sm mb-4">定番の人気商品。丸型・四角型・ハート型など豊富な形状から選べます。</p>
+<ul class="flex gap-2 text-xs text-gray-400">
+<li><i class="fa-solid fa-shapes mr-1"></i>多形状</li>
+<li><i class="fa-solid fa-ruler-combined mr-1"></i>50〜70mm</li>
+<li><i class="fa-regular fa-image mr-1"></i>両面印刷可</li>
+</ul>
+</div>
+<!-- Studio 2 -->
+<div class="group" id="studio-card-2">
+<div class="h-[500px] overflow-hidden rounded-xl relative mb-6">
+<img alt="minimal concrete studio space with industrial texture, grey walls, spotlight, fashion photography background" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c56e9a2fbc-3be5c817150f37ae9464.png"/>
+<div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded text-xs font-bold uppercase tracking-wider">
+                            Room B
+                        </div>
+</div>
+<h3 class="text-2xl font-bold mb-2">アクリルスタンド</h3>
+<p class="text-gray-500 text-sm mb-4">推し活グッズの定番。等身大からミニサイズまで幅広く対応します。</p>
+<ul class="flex gap-2 text-xs text-gray-400">
+<li><i class="fa-solid fa-up-right-and-down-left-from-center mr-1"></i>自由カット</li>
+<li><i class="fa-solid fa-ruler-combined mr-1"></i>70〜200mm</li>
+<li><i class="fa-regular fa-image mr-1"></i>片面/両面</li>
+</ul>
+</div>
+<!-- Studio 3 -->
+<div class="group" id="studio-card-3">
+<div class="h-[500px] overflow-hidden rounded-xl relative mb-6">
+<img alt="white kitchen studio set, marble countertop, wooden shelves, cooking video background" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/55ac347b33-845ed3d2b50707885a9e.png"/>
+<div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded text-xs font-bold uppercase tracking-wider">
+                            Room C
+                        </div>
+</div>
+<h3 class="text-2xl font-bold mb-2">ネームプレート</h3>
+<p class="text-gray-500 text-sm mb-4">イベントやオフィス用に。名入れ・ロゴ入りのオリジナルプレートを制作できます。</p>
+<ul class="flex gap-2 text-xs text-gray-400">
+<li><i class="fa-solid fa-pen-nib mr-1"></i>名入れ対応</li>
+<li><i class="fa-solid fa-ruler-combined mr-1"></i>80〜120mm</li>
+<li><i class="fa-solid fa-building mr-1"></i>法人対応可</li>
+</ul>
+</div>
+</div>
+</div>
+</section><section class="py-24 bg-white" id="features">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="order-2 md:order-1 relative">
+<div class="h-[600px] w-full bg-gray-100 rounded-2xl overflow-hidden">
+<img alt="professional photography equipment setup, c-stands, lights, camera on tripod in a studio" class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5e8e5dfe9b-6690f30807ef072f5fca.png"/>
+</div>
+<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-white p-4 rounded-xl shadow-xl hidden md:block">
+<img alt="makeup room with lighted mirror, clean white interior" class="w-full h-full object-cover rounded-lg" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/085b63dae8-bd1867293ba3d133f7d9.png"/>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<h2 class="text-4xl md:text-5xl font-serif font-bold mb-8">Comfortable<br/>Workflow</h2>
+<div class="space-y-8">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-xl shrink-0">
+<i class="fa-regular fa-file-lines"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">テンプレートで時短</h3>
+<p class="text-gray-500 text-sm leading-relaxed">
+                                    商品別の無料テンプレートで、ゼロからデザインする手間を省けます。Illustrator・Photoshop・PNG形式に対応。
+                                </p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-xl shrink-0">
+<i class="fa-solid fa-list-check"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">入稿データのセルフチェック</h3>
+<p class="text-gray-500 text-sm leading-relaxed">
+                                    チェックリストで入稿前に解像度・カラーモード・塗り足しを自己確認。入稿ミスを防ぎます。
+                                </p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-xl shrink-0">
+<i class="fa-solid fa-headset"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">サービスを比較して選ぶ</h3>
+<p class="text-gray-500 text-sm leading-relaxed">
+                                    当サイトの比較記事やまとめ記事を活用して、あなたにぴったりのアクリルグッズ制作サービスを見つけましょう。
+                                </p>
+</div>
+</div>
+</div>
+<div class="mt-10">
+<a class="text-sm font-bold border-b border-black pb-1 hover:text-gray-600 transition" href="#">記事一覧を見る</a>
+</div>
+</div>
+</div>
+</div>
+</section></div></section><div class="h-10" id="section-a4"></div><section class="unified-section py-10"><div class="max-w-6xl mx-auto px-6"><section class="py-24 bg-studio-black text-white relative overflow-hidden" id="concept">
+<div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="absolute -top-10 -left-10 text-[10rem] font-pixel text-white/5 select-none z-0">01</div>
+<h2 class="text-4xl md:text-5xl font-bold mb-8 relative z-10 leading-tight">
+                    Where Design<br/>
+<span class="text-neon-lime">Meets Acrylic</span>
+</h2>
+<p class="text-gray-400 text-lg mb-8 leading-relaxed font-light">
+                    ACRY LABOは単なる情報サイトではありません。サービス比較・最新情報・入稿ノウハウを通じて、
+                    あなたに最適なアクリルグッズ制作サービスを見つけるためのメディアです。
+                    同人グッズ、ノベルティ、販促品など、あらゆるシーンに対応します。
+                </p>
+<ul class="space-y-4 font-mono text-sm text-gray-300">
+<li class="flex items-center gap-3">
+<i class="fa-solid fa-square text-neon-lime text-xs"></i>
+<span>掲載サービス 30社以上</span>
+</li>
+<li class="flex items-center gap-3">
+<i class="fa-solid fa-square text-neon-lime text-xs"></i>
+<span>入稿ノウハウ＆比較記事</span>
+</li>
+<li class="flex items-center gap-3">
+<i class="fa-solid fa-square text-neon-lime text-xs"></i>
+<span>最新サービス情報を毎週更新</span>
+</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="h-64 overflow-hidden rounded-sm border border-white/10">
+<img alt="close up texture of concrete wall and fluted glass with shadow play, minimalist aesthetic" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/4ff90d1e20-945eacf3a5c9acb03557.png"/>
+</div>
+<div class="h-64 overflow-hidden rounded-sm border border-white/10 translate-y-8">
+<img alt="mid century modern chair in a white room with sunlight casting shadows, aesthetic photography" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/6d2955d892-c22e942ac05fea6c8f75.png"/>
+</div>
+</div>
+</div>
+</section><section class="py-24 bg-white text-studio-black" id="spaces">
+<div class="max-w-[1440px] mx-auto px-6">
+<div class="flex justify-between items-end mb-16 border-b-4 border-studio-black pb-4">
+<h2 class="text-6xl font-bold font-sans tracking-tighter">OUR SERVICES</h2>
+<div class="font-mono text-xl">Explore our services</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Space Card 1 -->
+<div class="group cursor-pointer">
+<div class="h-[500px] overflow-hidden border-2 border-studio-black relative mb-4">
+<div class="absolute top-4 left-4 z-10 bg-neon-lime px-3 py-1 font-mono text-xs font-bold border border-black">SERVICE A</div>
+<img alt="bright white living room studio set with large windows, sheer curtains, beige sofa, wooden floor" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f3c52d697e-53b635c3cdce1c97997c.png"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold mb-1">サービス比較記事</h3>
+<p class="font-mono text-sm text-gray-600">料金・納期・品質で徹底比較</p>
+</div>
+<i class="fa-solid fa-arrow-right -rotate-45 text-2xl group-hover:rotate-0 transition-transform duration-300"></i>
+</div>
+</div>
+<!-- Space Card 2 -->
+<div class="group cursor-pointer md:mt-16">
+<div class="h-[500px] overflow-hidden border-2 border-studio-black relative mb-4">
+<div class="absolute top-4 left-4 z-10 bg-neon-lime px-3 py-1 font-mono text-xs font-bold border border-black">SERVICE B</div>
+<img alt="industrial style kitchen studio, stainless steel island, concrete walls, dark moody lighting setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d8a04b60ec-4c78cf0e68585811a782.png"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold mb-1">入稿ノウハウ</h3>
+<p class="font-mono text-sm text-gray-600">入稿の基本・トラブル解決</p>
+</div>
+<i class="fa-solid fa-arrow-right -rotate-45 text-2xl group-hover:rotate-0 transition-transform duration-300"></i>
+</div>
+</div>
+<!-- Space Card 3 -->
+<div class="group cursor-pointer">
+<div class="h-[500px] overflow-hidden border-2 border-studio-black relative mb-4">
+<div class="absolute top-4 left-4 z-10 bg-neon-lime px-3 py-1 font-mono text-xs font-bold border border-black">SERVICE C</div>
+<img alt="white cyclorama wall studio photography, infinity wall, professional studio lights, clean minimalist" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ee546a8f2c-d32483130474bc56237e.png"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold mb-1">おすすめサービス特集</h3>
+<p class="font-mono text-sm text-gray-600">目的別・予算別のおすすめ紹介</p>
+</div>
+<i class="fa-solid fa-arrow-right -rotate-45 text-2xl group-hover:rotate-0 transition-transform duration-300"></i>
+</div>
+</div>
+</div>
+</div>
+</section><section class="py-20 bg-white" id="equipment">
+<div class="max-w-[1440px] mx-auto px-6">
+<div class="flex flex-col md:flex-row gap-12">
+<div class="w-full md:w-1/3">
+<h2 class="text-4xl font-bold mb-6 text-studio-black">FREE<br/>DESIGN<br/>RESOURCES</h2>
+<p class="text-gray-600 mb-8">各アクリルグッズ制作サービスが提供する無料テンプレートや入稿ガイドをまとめました。サービス選びの参考にご活用ください。</p>
+<a class="inline-block border-b-2 border-black pb-1 font-bold hover:text-neon-lime hover:border-neon-lime transition-colors" href="#">Download Templates -&gt;</a>
+</div>
+<div class="w-full md:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-4">
+                     </div></div></section></div></section><div class="h-10" id="section-a5"></div><footer class="unified-section py-16 border-t border-white/10" id="contact">
+<div class="max-w-6xl mx-auto px-6">
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">ABOUT US</div>
+<h2 class="text-3xl font-bold mt-3 text-white">運営情報</h2>
+<div class="mt-8 rounded-3xl border border-white/10 bg-[#0f0f10] p-8 max-w-lg">
+<dl class="space-y-4 text-sm text-white/80">
+<div class="flex justify-between gap-4"><dt class="text-white/60">運営会社</dt><dd class="text-right">ACRY LABO</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">所在地</dt><dd class="text-right">〒107-0062 東京都港区南青山5-10-1</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">Email</dt><dd class="text-right">info@acrylabo.jp</dd></div>
+</dl>
+</div>
+</div>
+</footer><script>
+document.addEventListener('DOMContentLoaded', () => {
+  const clockEl = document.getElementById('topClock');
+  const pad = (n)=>String(n).padStart(2,'0');
+  const tick = ()=> {
+    const now = new Date();
+    if(clockEl) clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 10000);
+
+  const slider = document.querySelector('.top-slider');
+  if(!slider) return;
+  const track = slider.querySelector('.top-slider-track');
+  const slides = Array.from(slider.querySelectorAll('.top-slide'));
+  const dots = Array.from(slider.querySelectorAll('.top-dot'));
+  const prev = slider.querySelector('.top-prev');
+  const next = slider.querySelector('.top-next');
+
+  let idx = 0;
+  let timer = null;
+
+  const setActive = (i) => {
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+  };
+
+  const start = () => {
+    stop();
+    timer = setInterval(() => setActive(idx + 1), 4200);
+  };
+  const stop = () => {
+    if(timer) clearInterval(timer);
+    timer = null;
+  };
+
+  dots.forEach((d, i) => d.addEventListener('click', () => { setActive(i); start(); }));
+  if(prev) prev.addEventListener('click', () => { setActive(idx - 1); start(); });
+  if(next) next.addEventListener('click', () => { setActive(idx + 1); start(); });
+
+  let startX = 0;
+  let isDown = false;
+  slider.addEventListener('pointerdown', (e) => { isDown = true; startX = e.clientX; stop(); });
+  const endSwipe = (clientX) => {
+    if(!isDown) return;
+    isDown = false;
+    const dx = clientX - startX;
+    if(Math.abs(dx) > 40) setActive(idx + (dx < 0 ? 1 : -1));
+    start();
+  };
+  slider.addEventListener('pointerup', (e) => endSwipe(e.clientX));
+  slider.addEventListener('pointercancel', () => { isDown = false; start(); });
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+
+  setActive(0);
+  start();
+});
+</script></body></html>

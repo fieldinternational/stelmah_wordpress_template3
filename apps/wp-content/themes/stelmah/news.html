@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>top_html</title><script src="https://cdn.tailwindcss.com"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Noto+Sans+JP:wght@300;400;500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/><script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'neon-pink': '#FF00FF',
+        'dark-bg': '#111111',
+        'card-bg': '#1a1a1a',
+        'grid-line': '#2a2a2a',
+      },
+      fontFamily: {
+        sans: ['Inter','Noto Sans JP','sans-serif'],
+        mono: ['Space Mono','Courier New','monospace'],
+      }
+    }
+  }
+};
+window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+</script><style id="unified-style">
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:#0f0f0f; }
+::-webkit-scrollbar-thumb{ background:#FF00FF; border-radius:6px; }
+
+html,body{ height:100%; }
+body{
+  background:#111;
+  color:#eee;
+  font-family: Inter,'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ color:#fff; }
+a{ color:#fff; }
+a:hover{ color:#FF00FF; }
+
+.unified-section{
+  background:#111;
+  color:#eee;
+}
+.unified-section .bg-white,
+.unified-section .bg-gray-50,
+.unified-section .bg-gray-100{
+  background:#1a1a1a !important;
+}
+.unified-section .text-gray-900,
+.unified-section .text-gray-800,
+.unified-section .text-gray-700{
+  color:#fff !important;
+}
+.unified-section .text-gray-600,
+.unified-section .text-gray-500,
+.unified-section .text-gray-400,
+.unified-section .text-studio-text,
+.unified-section .text-studio-muted{
+  color:rgba(255,255,255,0.72) !important;
+}
+.unified-section .border-gray-100,
+.unified-section .border-gray-200,
+.unified-section .border-gray-300{
+  border-color:rgba(255,255,255,0.12) !important;
+}
+.unified-section .shadow-lg,
+.unified-section .shadow-xl,
+.unified-section .shadow-2xl{
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45) !important;
+}
+
+.unified-section a.bg-studio-accent,
+.unified-section button.bg-studio-accent,
+.unified-section a.bg-gray-900,
+.unified-section a.bg-black,
+.unified-section button.bg-black{
+  background:#FF00FF !important;
+  color:#000 !important;
+}
+.unified-section a.border-studio-accent,
+.unified-section a.border-black,
+.unified-section .border-studio-accent{
+  border-color:#FF00FF !important;
+}
+.unified-section a.text-studio-accent,
+.unified-section i.text-studio-accent{
+  color:#FF00FF !important;
+}
+
+.top-hero{ position:relative; padding-top:88px; }
+.top-slider{ position:relative; overflow:hidden; border-radius:24px; background:#0b0b0b; }
+.top-slider-track{ display:flex; transition:transform 520ms ease; will-change:transform; }
+.top-slide{ min-width:100%; }
+.top-slide img{ width:100%; height:clamp(320px,44vw,640px); object-fit:cover; display:block; filter:grayscale(100%); transition:filter 400ms ease; }
+.top-slider:hover .top-slide img{ filter:grayscale(0%); }
+.top-slider-dots{
+  position:absolute; left:0; right:0; bottom:14px;
+  display:flex; justify-content:center; align-items:center;
+  gap:10px; padding:0 12px;
+}
+.top-dot{
+  width:10px; height:10px; border-radius:999px; border:0;
+  background:rgba(255,255,255,0.45);
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  cursor:pointer;
+}
+.top-dot.is-active{ background:rgba(255,255,255,0.92); transform:scale(1.15); }
+.top-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(0,0,0,0.25);
+  color:white; font-size:26px; line-height:40px;
+  cursor:pointer; opacity:0;
+  transition:opacity 200ms ease, background 200ms ease;
+}
+.top-prev{ left:14px; }
+.top-next{ right:14px; }
+.top-slider:hover .top-arrow{ opacity:1; }
+.top-arrow:hover{ background:rgba(255,255,255,0.15); }
+
+@media (prefers-reduced-motion: reduce){
+  .top-slider-track{ transition:none; }
+}
+</style></head>
+<body class="bg-black text-white">
+<header class="fixed top-0 left-0 w-full z-50 pointer-events-none mix-blend-difference text-white p-6 flex justify-between items-start"><div class="font-mono text-sm tracking-widest"><span class="block">ACRY LABO</span><span class="block text-xs opacity-70">ACRYLIC GOODS MEDIA</span></div><div class="pointer-events-auto flex items-center gap-3"><nav class="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.35em] uppercase opacity-90"><a href="index.html" class="hover:text-neon-pink transition-colors">TOP</a><a href="articles.html" class="hover:text-neon-pink transition-colors">ARTICLES</a><a href="guide.html" class="hover:text-neon-pink transition-colors">GUIDE</a><a href="about.html" class="hover:text-neon-pink transition-colors">ABOUT</a><a href="privacy.html" class="hover:text-neon-pink transition-colors">PRIVACY</a><a href="news.html" class="hover:text-neon-pink transition-colors">NEWS</a><a href="#" class="hover:text-neon-pink transition-colors">SERVICE</a></nav><div class="text-xs opacity-80 font-mono" id="topClock">--:--</div><a class="bg-neon-pink text-black hover:bg-white px-4 py-2 font-bold uppercase text-xs tracking-widest transition-colors" href="#contact">お問い合わせ</a></div></header>
+<div class="h-24"></div>
+
+<main class="max-w-6xl mx-auto px-6 py-16">
+  <div class="mb-10">
+    <p class="font-mono text-xs tracking-widest text-gray-400">NEWS</p>
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight mt-3">ニュース一覧</h1>
+    <p class="text-gray-300 mt-4 max-w-2xl">ACRY LABOの最新情報・お知らせを掲載します。新サービスの掲載や特集記事をお届けします。</p>
+  </div>
+
+  <section class="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 mb-10">
+    <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+      <div class="flex flex-wrap gap-2">
+        <button class="px-4 py-2 rounded-full border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm">すべて</button>
+        <button class="px-4 py-2 rounded-full border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm">お知らせ</button>
+        <button class="px-4 py-2 rounded-full border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm">特集</button>
+        <button class="px-4 py-2 rounded-full border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm">更新情報</button>
+      </div>
+      <div class="w-full md:w-80">
+        <label class="sr-only" for="q">検索</label>
+        <input id="q" type="search" placeholder="キーワード検索" class="w-full px-4 py-2 rounded-xl bg-black/40 border border-white/10 focus:outline-none focus:ring-2 focus:ring-white/30" />
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <a href="news_detail.html" class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-6 md:p-7 block">
+      <div class="flex items-center justify-between gap-4">
+        <p class="font-mono text-xs tracking-widest text-gray-400">2026-03-01</p>
+        <span class="font-mono text-[11px] tracking-widest px-3 py-1 rounded-full border border-white/10 bg-black/30">特集</span>
+      </div>
+      <h3 class="text-xl md:text-2xl font-black mt-4 group-hover:underline underline-offset-4">春のおすすめアクリルグッズサービス特集を公開しました</h3>
+      <p class="text-gray-300 mt-3 leading-relaxed">この春おすすめのアクリルグッズサービスを徹底比較。初心者にもおすすめのサービスを紹介します。</p>
+      <div class="mt-6 flex items-center gap-2 text-sm font-bold tracking-wide">
+        <span>続きを読む</span>
+        <span class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+      </div>
+    </a>
+    
+    
+    <a href="news_detail.html" class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-6 md:p-7 block">
+      <div class="flex items-center justify-between gap-4">
+        <p class="font-mono text-xs tracking-widest text-gray-400">2026-02-18</p>
+        <span class="font-mono text-[11px] tracking-widest px-3 py-1 rounded-full border border-white/10 bg-black/30">更新情報</span>
+      </div>
+      <h3 class="text-xl md:text-2xl font-black mt-4 group-hover:underline underline-offset-4">アクリルキーホルダー用テンプレートを追加しました</h3>
+      <p class="text-gray-300 mt-3 leading-relaxed">丸型・ハート型など5種類の新テンプレートを公開しました。</p>
+      <div class="mt-6 flex items-center gap-2 text-sm font-bold tracking-wide">
+        <span>続きを読む</span>
+        <span class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+      </div>
+    </a>
+    
+    
+    <a href="news_detail.html" class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-6 md:p-7 block">
+      <div class="flex items-center justify-between gap-4">
+        <p class="font-mono text-xs tracking-widest text-gray-400">2026-02-05</p>
+        <span class="font-mono text-[11px] tracking-widest px-3 py-1 rounded-full border border-white/10 bg-black/30">お知らせ</span>
+      </div>
+      <h3 class="text-xl md:text-2xl font-black mt-4 group-hover:underline underline-offset-4">入稿ガイドをリニューアルしました</h3>
+      <p class="text-gray-300 mt-3 leading-relaxed">初心者向けのステップバイステップ解説を大幅に強化しました。</p>
+      <div class="mt-6 flex items-center gap-2 text-sm font-bold tracking-wide">
+        <span>続きを読む</span>
+        <span class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+      </div>
+    </a>
+    
+    
+    <a href="news_detail.html" class="group rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-6 md:p-7 block">
+      <div class="flex items-center justify-between gap-4">
+        <p class="font-mono text-xs tracking-widest text-gray-400">2026-01-20</p>
+        <span class="font-mono text-[11px] tracking-widest px-3 py-1 rounded-full border border-white/10 bg-black/30">お知らせ</span>
+      </div>
+      <h3 class="text-xl md:text-2xl font-black mt-4 group-hover:underline underline-offset-4">年始の対応スケジュールについて</h3>
+      <p class="text-gray-300 mt-3 leading-relaxed">年末年始の掲載・更新スケジュールについてお知らせします。</p>
+      <div class="mt-6 flex items-center gap-2 text-sm font-bold tracking-wide">
+        <span>続きを読む</span>
+        <span class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+      </div>
+    </a>
+    
+  </section>
+
+  <div class="mt-12 flex items-center justify-center gap-2">
+    <a class="px-4 py-2 rounded-xl border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm" href="#">Prev</a>
+    <span class="px-4 py-2 rounded-xl border border-white/10 bg-white/10 text-sm">1</span>
+    <a class="px-4 py-2 rounded-xl border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm" href="#">2</a>
+    <a class="px-4 py-2 rounded-xl border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm" href="#">Next</a>
+  </div>
+
+  <div class="mt-16 rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div>
+      <p class="font-mono text-xs tracking-widest text-gray-400">CONTACT</p>
+      <h2 class="text-2xl md:text-3xl font-black mt-3">ご相談・お問い合わせ</h2>
+      <p class="text-gray-300 mt-2">記事内容やサービス掲載に関するお問い合わせは、フッターのフォームからどうぞ。</p>
+    </div>
+    <a href="#contact" class="bg-neon-pink text-black hover:bg-white px-6 py-3 font-bold uppercase text-xs tracking-widest transition-colors rounded-full">お問い合わせ</a>
+  </div>
+</main>
+
+<footer class="unified-section py-16 border-t border-white/10" id="contact"><div class="max-w-6xl mx-auto px-6">
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">ABOUT US</div>
+<h2 class="text-3xl font-bold mt-3 text-white">運営情報</h2>
+<div class="mt-8 rounded-3xl border border-white/10 bg-[#0f0f10] p-8 max-w-lg">
+<dl class="space-y-4 text-sm text-white/80">
+<div class="flex justify-between gap-4"><dt class="text-white/60">運営会社</dt><dd class="text-right">ACRY LABO</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">所在地</dt><dd class="text-right">〒107-0062 東京都港区南青山5-10-1</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">Email</dt><dd class="text-right">info@acrylabo.jp</dd></div>
+</dl>
+</div>
+</div></footer>
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+  const clockEl = document.getElementById('topClock');
+  const pad = (n)=>String(n).padStart(2,'0');
+  const tick = ()=> {
+    const now = new Date();
+    if(clockEl) clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 10000);
+
+  const slider = document.querySelector('.top-slider');
+  if(!slider) return;
+  const track = slider.querySelector('.top-slider-track');
+  const slides = Array.from(slider.querySelectorAll('.top-slide'));
+  const dots = Array.from(slider.querySelectorAll('.top-dot'));
+  const prev = slider.querySelector('.top-prev');
+  const next = slider.querySelector('.top-next');
+
+  let idx = 0;
+  let timer = null;
+
+  const setActive = (i) => {
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+  };
+
+  const start = () => {
+    stop();
+    timer = setInterval(() => setActive(idx + 1), 4200);
+  };
+  const stop = () => {
+    if(timer) clearInterval(timer);
+    timer = null;
+  };
+
+  dots.forEach((d, i) => d.addEventListener('click', () => { setActive(i); start(); }));
+  if(prev) prev.addEventListener('click', () => { setActive(idx - 1); start(); });
+  if(next) next.addEventListener('click', () => { setActive(idx + 1); start(); });
+
+  let startX = 0;
+  let isDown = false;
+  slider.addEventListener('pointerdown', (e) => { isDown = true; startX = e.clientX; stop(); });
+  const endSwipe = (clientX) => {
+    if(!isDown) return;
+    isDown = false;
+    const dx = clientX - startX;
+    if(Math.abs(dx) > 40) setActive(idx + (dx < 0 ? 1 : -1));
+    start();
+  };
+  slider.addEventListener('pointerup', (e) => endSwipe(e.clientX));
+  slider.addEventListener('pointercancel', () => { isDown = false; start(); });
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+
+  setActive(0);
+  start();
+});
+</script>
+
+</body>
+</html>

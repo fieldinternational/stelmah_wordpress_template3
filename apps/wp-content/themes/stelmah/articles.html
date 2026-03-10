@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>top_html</title><script src="https://cdn.tailwindcss.com"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Noto+Sans+JP:wght@300;400;500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/><script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'neon-pink': '#FF00FF',
+        'dark-bg': '#111111',
+        'card-bg': '#1a1a1a',
+        'grid-line': '#2a2a2a',
+      },
+      fontFamily: {
+        sans: ['Inter','Noto Sans JP','sans-serif'],
+        mono: ['Space Mono','Courier New','monospace'],
+      }
+    }
+  }
+};
+window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+</script><style id="unified-style">
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:#0f0f0f; }
+::-webkit-scrollbar-thumb{ background:#FF00FF; border-radius:6px; }
+
+html,body{ height:100%; }
+body{
+  background:#111;
+  color:#eee;
+  font-family: Inter,'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ color:#fff; }
+a{ color:#fff; }
+a:hover{ color:#FF00FF; }
+
+.unified-section{
+  background:#111;
+  color:#eee;
+}
+.unified-section .bg-white,
+.unified-section .bg-gray-50,
+.unified-section .bg-gray-100{
+  background:#1a1a1a !important;
+}
+.unified-section .text-gray-900,
+.unified-section .text-gray-800,
+.unified-section .text-gray-700{
+  color:#fff !important;
+}
+.unified-section .text-gray-600,
+.unified-section .text-gray-500,
+.unified-section .text-gray-400,
+.unified-section .text-studio-text,
+.unified-section .text-studio-muted{
+  color:rgba(255,255,255,0.72) !important;
+}
+.unified-section .border-gray-100,
+.unified-section .border-gray-200,
+.unified-section .border-gray-300{
+  border-color:rgba(255,255,255,0.12) !important;
+}
+.unified-section .shadow-lg,
+.unified-section .shadow-xl,
+.unified-section .shadow-2xl{
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45) !important;
+}
+
+.unified-section a.bg-studio-accent,
+.unified-section button.bg-studio-accent,
+.unified-section a.bg-gray-900,
+.unified-section a.bg-black,
+.unified-section button.bg-black{
+  background:#FF00FF !important;
+  color:#000 !important;
+}
+.unified-section a.border-studio-accent,
+.unified-section a.border-black,
+.unified-section .border-studio-accent{
+  border-color:#FF00FF !important;
+}
+.unified-section a.text-studio-accent,
+.unified-section i.text-studio-accent{
+  color:#FF00FF !important;
+}
+
+.top-hero{ position:relative; padding-top:88px; }
+.top-slider{ position:relative; overflow:hidden; border-radius:24px; background:#0b0b0b; }
+.top-slider-track{ display:flex; transition:transform 520ms ease; will-change:transform; }
+.top-slide{ min-width:100%; }
+.top-slide img{ width:100%; height:clamp(320px,44vw,640px); object-fit:cover; display:block; filter:grayscale(100%); transition:filter 400ms ease; }
+.top-slider:hover .top-slide img{ filter:grayscale(0%); }
+.top-slider-dots{
+  position:absolute; left:0; right:0; bottom:14px;
+  display:flex; justify-content:center; align-items:center;
+  gap:10px; padding:0 12px;
+}
+.top-dot{
+  width:10px; height:10px; border-radius:999px; border:0;
+  background:rgba(255,255,255,0.45);
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  cursor:pointer;
+}
+.top-dot.is-active{ background:rgba(255,255,255,0.92); transform:scale(1.15); }
+.top-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(0,0,0,0.25);
+  color:white; font-size:26px; line-height:40px;
+  cursor:pointer; opacity:0;
+  transition:opacity 200ms ease, background 200ms ease;
+}
+.top-prev{ left:14px; }
+.top-next{ right:14px; }
+.top-slider:hover .top-arrow{ opacity:1; }
+.top-arrow:hover{ background:rgba(255,255,255,0.15); }
+
+@media (prefers-reduced-motion: reduce){
+  .top-slider-track{ transition:none; }
+}
+</style><style id="article-styles">
+/* Category filter buttons */
+.cat-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 20px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.18);
+  background:transparent; color:rgba(255,255,255,0.8);
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:12px; letter-spacing:0.05em;
+  cursor:pointer; transition:all 250ms ease;
+  white-space:nowrap;
+}
+.cat-btn:hover{
+  border-color:#FF00FF; color:#FF00FF;
+}
+.cat-btn.active{
+  background:#FF00FF; color:#000;
+  border-color:#FF00FF; font-weight:700;
+}
+
+/* Tag filter buttons */
+.tag-btn{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:5px 14px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.55);
+  font-size:11px; cursor:pointer;
+  transition:all 250ms ease;
+}
+.tag-btn:hover{
+  border-color:rgba(255,0,255,0.4); color:rgba(255,255,255,0.8);
+}
+.tag-btn.active{
+  background:rgba(255,0,255,0.15); color:#FF00FF;
+  border-color:rgba(255,0,255,0.5);
+}
+
+/* Article cards */
+.article-card{
+  background:#1a1a1a;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px; overflow:hidden;
+  transition:transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+}
+.article-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,0,255,0.4);
+  box-shadow:0 16px 40px rgba(255,0,255,0.08);
+}
+.article-card img{
+  width:100%; height:200px; object-fit:cover;
+  filter:grayscale(30%);
+  transition:filter 400ms ease;
+}
+.article-card:hover img{
+  filter:grayscale(0%);
+}
+.article-card .card-body{
+  padding:20px;
+}
+.article-card .card-badge{
+  display:inline-block;
+  padding:3px 10px; border-radius:999px;
+  background:rgba(255,0,255,0.12); color:#FF00FF;
+  font-family:'Space Mono',monospace;
+  font-size:10px; letter-spacing:0.08em;
+  margin-bottom:10px;
+}
+.article-card .card-title{
+  font-size:16px; font-weight:600; line-height:1.5;
+  color:#fff; margin-bottom:8px;
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+}
+.article-card .card-excerpt{
+  font-size:13px; line-height:1.7;
+  color:rgba(255,255,255,0.55);
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+  margin-bottom:12px;
+}
+.article-card .card-tags{
+  display:flex; flex-wrap:wrap; gap:6px;
+  margin-bottom:14px;
+}
+.article-card .card-tag{
+  font-size:10px; color:rgba(255,255,255,0.4);
+  background:rgba(255,255,255,0.05);
+  padding:2px 8px; border-radius:999px;
+}
+.article-card .card-footer{
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);
+}
+.article-card .card-date{
+  font-family:'Space Mono',monospace;
+  font-size:11px; color:rgba(255,255,255,0.35);
+}
+.article-card .card-link{
+  font-family:'Space Mono',monospace;
+  font-size:11px; color:#FF00FF;
+  letter-spacing:0.1em;
+  transition:opacity 200ms;
+}
+.article-card .card-link:hover{ opacity:0.7; }
+
+/* Pagination buttons */
+.page-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:10px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:transparent; color:rgba(255,255,255,0.6);
+  font-family:'Space Mono',monospace; font-size:13px;
+  cursor:pointer; transition:all 200ms ease;
+}
+.page-btn:hover{
+  border-color:#FF00FF; color:#FF00FF;
+}
+.page-btn.active{
+  background:#FF00FF; color:#000;
+  border-color:#FF00FF; font-weight:700;
+}
+.page-btn:disabled{
+  opacity:0.25; pointer-events:none;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.fade-in-up{
+  animation: fadeInUp 400ms ease forwards;
+}
+
+/* Active filter chips */
+.active-chip{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px 12px; border-radius:999px;
+  background:rgba(255,0,255,0.1); color:#FF00FF;
+  font-size:11px; border:1px solid rgba(255,0,255,0.25);
+}
+.active-chip button{
+  background:none; border:none; color:#FF00FF;
+  cursor:pointer; font-size:13px; line-height:1;
+  padding:0; margin-left:2px;
+}
+
+/* ── Pickup Section ── */
+.pickup-hero{
+  position:relative; border-radius:20px; overflow:hidden;
+  background:#1a1a1a; min-height:420px;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:border-color 300ms ease;
+}
+.pickup-hero:hover{ border-color:rgba(255,0,255,0.3); }
+.pickup-hero img{
+  width:100%; height:100%; object-fit:cover;
+  position:absolute; inset:0;
+  filter:grayscale(20%) brightness(0.65);
+  transition:filter 500ms ease, transform 600ms ease;
+}
+.pickup-hero:hover img{
+  filter:grayscale(0%) brightness(0.55);
+  transform:scale(1.03);
+}
+.pickup-hero .pickup-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:28px;
+}
+.pickup-hero .pickup-label{
+  display:inline-flex; align-items:center; gap:6px;
+  background:#FF00FF; color:#000;
+  font-family:'Space Mono',monospace;
+  font-size:10px; font-weight:700; letter-spacing:0.12em;
+  padding:4px 12px; border-radius:999px;
+  width:fit-content; margin-bottom:12px;
+}
+.pickup-hero .pickup-title{
+  font-size:22px; font-weight:700; line-height:1.45;
+  color:#fff; margin-bottom:8px;
+}
+.pickup-hero .pickup-excerpt{
+  font-size:13px; line-height:1.7;
+  color:rgba(255,255,255,0.65);
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+}
+.pickup-hero .pickup-meta{
+  display:flex; align-items:center; gap:12px;
+  margin-top:12px; font-size:11px;
+  font-family:'Space Mono',monospace;
+}
+.pickup-hero .pickup-meta .meta-date{ color:rgba(255,255,255,0.4); }
+.pickup-hero .pickup-meta .meta-link{ color:#FF00FF; letter-spacing:0.08em; }
+
+.pickup-side{
+  display:flex; gap:14px;
+  background:#1a1a1a; border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:border-color 300ms ease, transform 300ms ease;
+  cursor:pointer;
+}
+.pickup-side:hover{
+  border-color:rgba(255,0,255,0.3);
+  transform:translateX(4px);
+}
+.pickup-side img{
+  width:160px; min-height:140px; object-fit:cover; flex-shrink:0;
+  filter:grayscale(30%);
+  transition:filter 400ms ease;
+}
+.pickup-side:hover img{ filter:grayscale(0%); }
+.pickup-side .pickup-side-body{
+  padding:16px 16px 16px 0;
+  display:flex; flex-direction:column; justify-content:center;
+  min-width:0;
+}
+.pickup-side .pickup-side-badge{
+  font-family:'Space Mono',monospace;
+  font-size:10px; color:#FF00FF; letter-spacing:0.06em;
+  margin-bottom:6px;
+}
+.pickup-side .pickup-side-title{
+  font-size:14px; font-weight:600; line-height:1.5; color:#fff;
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+  margin-bottom:6px;
+}
+.pickup-side .pickup-side-date{
+  font-family:'Space Mono',monospace;
+  font-size:10px; color:rgba(255,255,255,0.35);
+}
+
+/* ── Category × Tag Detail Section ── */
+.cattag-detail{
+  background:#1a1a1a;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:20px;
+  padding:32px 28px;
+}
+.cattag-detail h2{
+  font-size:1.5rem;
+  font-weight:900;
+  color:#fff;
+  margin-top:2.5rem;
+  margin-bottom:1rem;
+  padding-left:14px;
+  border-left:4px solid #FF00FF;
+  line-height:1.4;
+}
+.cattag-detail h2:first-child{
+  margin-top:0;
+}
+.cattag-detail h3{
+  font-size:1.2rem;
+  font-weight:700;
+  color:rgba(255,255,255,0.9);
+  margin-top:2rem;
+  margin-bottom:0.75rem;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(255,0,255,0.25);
+  line-height:1.5;
+}
+.cattag-detail p{
+  color:rgba(255,255,255,0.72);
+  line-height:1.85;
+  margin-bottom:1rem;
+}
+.cattag-detail img{
+  max-width:100%;
+  height:auto;
+  border-radius:12px;
+  margin:1.5rem 0;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.cattag-detail ul,
+.cattag-detail ol{
+  color:rgba(255,255,255,0.72);
+  padding-left:1.5em;
+  margin-bottom:1rem;
+  line-height:1.85;
+}
+.cattag-detail li{
+  margin-bottom:0.4rem;
+}
+.cattag-detail a{
+  color:#FF00FF;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.cattag-detail a:hover{
+  color:#fff;
+}
+
+@media (max-width: 768px){
+  .pickup-side img{ width:120px; min-height:110px; }
+  .pickup-hero{ min-height:320px; }
+  .pickup-hero .pickup-title{ font-size:18px; }
+  .cattag-detail{ padding:24px 18px; }
+}
+</style></head><body><header class="fixed top-0 left-0 w-full z-50 pointer-events-none mix-blend-difference text-white p-6 flex justify-between items-start"><div class="font-mono text-sm tracking-widest"><span class="block">ACRY LABO</span><span class="block text-xs opacity-70">ACRYLIC GOODS MEDIA</span></div><div class="pointer-events-auto flex items-center gap-3"><nav class="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.35em] uppercase opacity-90"><a href="index.html" class="hover:text-neon-pink transition-colors">TOP</a><a href="articles.html" class="hover:text-neon-pink transition-colors">ARTICLES</a><a href="guide.html" class="hover:text-neon-pink transition-colors">GUIDE</a><a href="about.html" class="hover:text-neon-pink transition-colors">ABOUT</a><a href="privacy.html" class="hover:text-neon-pink transition-colors">PRIVACY</a><a href="news.html" class="hover:text-neon-pink transition-colors">NEWS</a><a href="#" class="hover:text-neon-pink transition-colors">SERVICE</a></nav><div class="text-xs opacity-80 font-mono" id="topClock">--:--</div><a class="bg-neon-pink text-black hover:bg-white px-4 py-2 font-bold uppercase text-xs tracking-widest transition-colors" href="#contact">お問い合わせ</a></div></header><section class="top-hero"><div class="max-w-6xl mx-auto px-6 pb-16"><div class="grid lg:grid-cols-12 gap-8 items-center"><div class="lg:col-span-5 space-y-6">
+<div class="text-7xl md:text-8xl font-black italic tracking-tighter text-white">R</div>
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">CREATIVE SPACE</div>
+<h1 class="text-2xl md:text-3xl font-semibold leading-tight">ACRY LABO｜テンプレート豊富なアクリルグッズ専門メディア</h1>
+<p class="text-white/70 leading-relaxed">アクリルグッズ制作サービスの比較・紹介が充実しているので、最適なサービス選びがスムーズに進むメディアサイトです。アクリルキーホルダー／アクリルスタンド／アクリルブロックなど、商品別のおすすめサービスを紹介します。</p>
+<div class="flex flex-wrap gap-3 pt-2">
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-medium hover:opacity-90 transition" href="#section-a2">一覧へ</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/40 text-white text-sm font-medium hover:bg-white hover:text-black transition" href="#contact">相談リクエスト</a>
+</div>
+</div><div class="lg:col-span-7"><div class="top-slider"><div class="top-slider-track"><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f232c45305-2c7b155114100a018a1e.png"/></div><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/381dba732e-8b14493a404087c5b367.png"/></div><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/9c3a384c9c-db5ef922f12055a7a40f.png"/></div><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/695ae2f233-049417f5fd4fbd7429d3.png"/></div><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/91c7b19543-e548c6d370d1c5553319.png"/></div><div class="top-slide"><img alt="" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/fe2006aea0-4299cec61cd6941064c2.png"/></div></div><div class="top-slider-dots"><button aria-label="slide 1" class="top-dot" type="button"></button><button aria-label="slide 2" class="top-dot" type="button"></button><button aria-label="slide 3" class="top-dot" type="button"></button><button aria-label="slide 4" class="top-dot" type="button"></button><button aria-label="slide 5" class="top-dot" type="button"></button><button aria-label="slide 6" class="top-dot" type="button"></button></div><button aria-label="previous" class="top-arrow top-prev" type="button">‹</button><button aria-label="next" class="top-arrow top-next" type="button">›</button></div></div></div></div></section>
+
+<main class="pb-20 unified-section">
+<div class="max-w-6xl mx-auto px-6">
+
+<!-- Pickup Section -->
+<section class="pt-12 pb-10" id="pickupSection">
+  <div class="flex items-center gap-4 mb-6">
+    <div>
+      <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">PICKUP</div>
+      <h2 class="text-2xl font-bold mt-1">ピックアップ記事</h2>
+    </div>
+    <div class="flex-1 h-px bg-white/10 ml-4"></div>
+  </div>
+  <div class="grid lg:grid-cols-5 gap-5" id="pickupGrid">
+    <!-- JS renders here -->
+  </div>
+</section>
+
+<!-- Category × Tag Detail Section -->
+<section class="pt-12 pb-10 border-t border-white/10" id="cattagDetailSection">
+  <div class="flex items-center gap-4 mb-6">
+    <div>
+      <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">CATEGORY × TAG</div>
+      <h2 class="text-2xl font-bold mt-1">カテゴリ× タグの詳細情報に関して</h2>
+    </div>
+    <div class="flex-1 h-px bg-white/10 ml-4"></div>
+  </div>
+  <div class="cattag-detail" id="cattagDetailBody">
+    <!-- CKEditorで入力されたコンテンツがここに入ります -->
+    <h2>アクリルキーホルダーとは</h2>
+    <p>アクリルキーホルダーは、透明度の高いアクリル素材にフルカラー印刷を施したオリジナルグッズです。推し活・同人イベント・企業ノベルティなど、幅広い用途で人気を集めています。</p>
+    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f232c45305-2c7b155114100a018a1e.png" alt="アクリルキーホルダーのイメージ"/>
+    <h3>初心者が押さえておくべきポイント</h3>
+    <p>はじめてアクリルキーホルダーを制作する際は、データの作成方法・カットパスの設定・入稿時の注意点を事前に確認しておくことが重要です。テンプレートを活用すれば、デザイン初心者でもスムーズに制作を進められます。</p>
+    <h3>デザインのコツ</h3>
+    <p>カットラインの外側に2〜3mmの余白を設け、角を丸くすることで仕上がりがきれいになります。カラーモードはCMYK、解像度は350dpi以上を推奨します。</p>
+  </div>
+</section>
+
+<!-- Filter Section -->
+<section class="pt-12 pb-8 border-t border-white/10" id="section-a2" style="scroll-margin-top:110px;">
+  <div class="font-mono text-xs tracking-[0.4em] text-neon-pink mb-2">ARTICLES</div>
+  <h2 class="text-3xl font-bold mb-8">記事一覧</h2>
+
+  <!-- Category Buttons -->
+  <div class="flex flex-wrap gap-2 mb-5" id="catBtns">
+    <button class="cat-btn active" data-cat="all">すべて</button>
+    <button class="cat-btn" data-cat="keychain">アクリルキーホルダー</button>
+    <button class="cat-btn" data-cat="stand">アクリルスタンド</button>
+    <button class="cat-btn" data-cat="block">アクリルブロック</button>
+    <button class="cat-btn" data-cat="compare">サービス比較</button>
+    <button class="cat-btn" data-cat="guide">デザインガイド</button>
+    <button class="cat-btn" data-cat="howto">入稿ノウハウ</button>
+  </div>
+
+  <!-- Tag Buttons -->
+  <div class="flex flex-wrap gap-2 mb-5" id="tagBtns">
+    <button class="tag-btn" data-tag="beginner">#初心者向け</button>
+    <button class="tag-btn" data-tag="template">#テンプレート</button>
+    <button class="tag-btn" data-tag="doujin">#同人グッズ</button>
+    <button class="tag-btn" data-tag="novelty">#ノベルティ</button>
+    <button class="tag-btn" data-tag="oshi">#推し活</button>
+    <button class="tag-btn" data-tag="design">#デザイン</button>
+  </div>
+
+  <!-- Active Filters Display -->
+  <div class="flex flex-wrap items-center gap-2 min-h-[32px] mb-2" id="activeFilters"></div>
+</section>
+
+<!-- Article Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10" id="articleGrid"></div>
+
+<!-- No Results Message -->
+<div class="hidden text-center py-20" id="noResults">
+  <div class="text-5xl mb-4 opacity-30">📭</div>
+  <p class="text-white/50 font-mono text-sm">該当する記事が見つかりませんでした</p>
+  <button class="mt-4 text-neon-pink font-mono text-xs tracking-widest hover:underline" id="clearAllBtn">フィルターをクリア</button>
+</div>
+
+<!-- Pagination -->
+<div class="flex flex-col items-center gap-4 pt-4 pb-8" id="paginationWrap">
+  <div class="flex items-center gap-2" id="pagination"></div>
+  <div class="font-mono text-xs text-white/35" id="pageInfo"></div>
+</div>
+
+</div>
+</main>
+
+<footer class="unified-section py-16 border-t border-white/10" id="contact">
+<div class="max-w-6xl mx-auto px-6">
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">ABOUT US</div>
+<h2 class="text-3xl font-bold mt-3 text-white">運営情報</h2>
+<div class="mt-8 rounded-3xl border border-white/10 bg-[#0f0f10] p-8 max-w-lg">
+<dl class="space-y-4 text-sm text-white/80">
+<div class="flex justify-between gap-4"><dt class="text-white/60">運営会社</dt><dd class="text-right">ACRY LABO</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">所在地</dt><dd class="text-right">〒107-0062 東京都港区南青山5-10-1</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">Email</dt><dd class="text-right">info@acrylabo.jp</dd></div>
+</dl>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ── Clock ── */
+  const clockEl = document.getElementById('topClock');
+  const pad = (n)=>String(n).padStart(2,'0');
+  const tick = ()=> {
+    const now = new Date();
+    if(clockEl) clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 10000);
+
+  /* ── Hero Slider ── */
+  const slider = document.querySelector('.top-slider');
+  if(slider){
+    const track = slider.querySelector('.top-slider-track');
+    const slides = Array.from(slider.querySelectorAll('.top-slide'));
+    const dots = Array.from(slider.querySelectorAll('.top-dot'));
+    const prev = slider.querySelector('.top-prev');
+    const next = slider.querySelector('.top-next');
+
+    let idx = 0;
+    let timer = null;
+
+    const setActive = (i) => {
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+    };
+
+    const start = () => { stop(); timer = setInterval(() => setActive(idx + 1), 4200); };
+    const stop = () => { if(timer) clearInterval(timer); timer = null; };
+
+    dots.forEach((d, i) => d.addEventListener('click', () => { setActive(i); start(); }));
+    if(prev) prev.addEventListener('click', () => { setActive(idx - 1); start(); });
+    if(next) next.addEventListener('click', () => { setActive(idx + 1); start(); });
+
+    let startX = 0;
+    let isDown = false;
+    slider.addEventListener('pointerdown', (e) => { isDown = true; startX = e.clientX; stop(); });
+    const endSwipe = (clientX) => {
+      if(!isDown) return;
+      isDown = false;
+      const dx = clientX - startX;
+      if(Math.abs(dx) > 40) setActive(idx + (dx < 0 ? 1 : -1));
+      start();
+    };
+    slider.addEventListener('pointerup', (e) => endSwipe(e.clientX));
+    slider.addEventListener('pointercancel', () => { isDown = false; start(); });
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+
+    setActive(0);
+    start();
+  }
+
+  /* ── Article Data ── */
+  const articles = [
+    {
+      id:1, cat:'keychain', tags:['beginner','design'],
+      title:'アクリルキーホルダーの作り方｜初心者でも失敗しない完全ガイド',
+      excerpt:'アクリルキーホルダーをはじめて作る方向けに、データ作成から入稿・仕上がりまでの全工程をわかりやすく解説します。',
+      date:'2024-12-15',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/f232c45305-2c7b155114100a018a1e.png'
+    },
+    {
+      id:2, cat:'keychain', tags:['template','beginner'],
+      title:'アクリルキーホルダーのテンプレート活用術｜時短デザインの秘訣',
+      excerpt:'無料テンプレートを活用して効率よくアクリルキーホルダーをデザインする方法を紹介。Illustrator・Photoshop対応。',
+      date:'2024-12-08',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/381dba732e-8b14493a404087c5b367.png'
+    },
+    {
+      id:3, cat:'keychain', tags:['design','oshi'],
+      title:'アクリルキーホルダーの両面印刷｜デザインのポイントと注意点',
+      excerpt:'両面印刷のアクリルキーホルダーを作るときに知っておきたいデザインの裏表合わせや印刷ズレ対策を解説。',
+      date:'2024-11-28',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/9c3a384c9c-db5ef922f12055a7a40f.png'
+    },
+    {
+      id:4, cat:'stand', tags:['doujin','design'],
+      title:'同人イベントで映える！アクリルスタンド制作のコツ',
+      excerpt:'イベントのディスプレイで目を引くアクリルスタンドの制作ポイント。サイズ選び・台座デザイン・梱包方法まで網羅。',
+      date:'2024-11-20',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/695ae2f233-049417f5fd4fbd7429d3.png'
+    },
+    {
+      id:5, cat:'block', tags:['beginner','oshi'],
+      title:'アクリルブロック印刷の基礎知識｜写真映えするグッズを作ろう',
+      excerpt:'透明感が美しいアクリルブロック。写真やイラストを封入したような仕上がりが人気の理由と制作の基本を紹介します。',
+      date:'2024-11-12',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/91c7b19543-e548c6d370d1c5553319.png'
+    },
+    {
+      id:6, cat:'compare', tags:['beginner'],
+      title:'【2024年版】アクリルキーホルダー制作サービス5社を徹底比較',
+      excerpt:'価格・納期・品質・テンプレートの充実度で人気5社を比較。あなたに最適なサービスが見つかります。',
+      date:'2024-11-05',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/fe2006aea0-4299cec61cd6941064c2.png'
+    },
+    {
+      id:7, cat:'compare', tags:['novelty'],
+      title:'ノベルティグッズ制作サービスおすすめ比較｜法人・個人対応',
+      excerpt:'企業ノベルティや販促品としてアクリルグッズを検討中の方へ。小ロット対応・法人割引のあるサービスを比較紹介。',
+      date:'2024-10-28',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/c85b578a9e-772ac21a83c23cbbaa7b.png'
+    },
+    {
+      id:8, cat:'compare', tags:['doujin','novelty'],
+      title:'同人グッズ印刷所を価格・品質・納期で徹底比較',
+      excerpt:'同人イベント向けのアクリルグッズ印刷所を実際に利用した経験をもとに、価格・品質・納期の3軸で比較します。',
+      date:'2024-10-20',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/9505e1e237-ab32fc72ebdc15d2166e.png'
+    },
+    {
+      id:9, cat:'guide', tags:['oshi','design'],
+      title:'推し活グッズの定番！アクリルスタンドのデザインアイデア集',
+      excerpt:'推しの写真やイラストを使ったアクリルスタンドのデザインパターンを20種以上紹介。すぐに使えるレイアウト例付き。',
+      date:'2024-10-15',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/fbf5003638-da33663e9fe28af01d63.png'
+    },
+    {
+      id:10, cat:'guide', tags:['design','template'],
+      title:'プロが教えるアクリルグッズのデザインテクニック',
+      excerpt:'プロのデザイナーが実践するアクリルグッズのデザインテクニックを公開。配色・レイアウト・フォント選びのコツ。',
+      date:'2024-10-08',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/5a83b2fd13-1dd642fe3cb74a68b0e5.png'
+    },
+    {
+      id:11, cat:'howto', tags:['template','design'],
+      title:'入稿データの作り方｜Illustrator編・完全マニュアル',
+      excerpt:'Illustratorでのアクリルグッズ入稿データ作成手順を図解付きで解説。カットパス・塗り足し・カラーモードの設定方法。',
+      date:'2024-09-30',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/898206917e-3ddb21a248c372f2e525.png'
+    },
+    {
+      id:12, cat:'howto', tags:['beginner','template'],
+      title:'入稿時によくあるミスと対処法まとめ｜失敗しないチェックリスト',
+      excerpt:'入稿データのよくあるミスをランキング形式で紹介。事前にチェックすれば再入稿の手間を防げます。',
+      date:'2024-09-22',
+      img:'https://storage.googleapis.com/uxpilot-auth.appspot.com/7ea3bef47d-b49ee100df3222f93ea6.png'
+    }
+  ];
+
+  const catLabels = {
+    keychain:'アクリルキーホルダー', stand:'アクリルスタンド', block:'アクリルブロック',
+    compare:'サービス比較', guide:'デザインガイド', howto:'入稿ノウハウ'
+  };
+  const tagLabels = {
+    beginner:'初心者向け', template:'テンプレート', doujin:'同人グッズ',
+    novelty:'ノベルティ', oshi:'推し活', design:'デザイン'
+  };
+
+  const PER_PAGE = 6;
+  let currentCat = 'all';
+  let activeTags = new Set();
+  let currentPage = 1;
+
+  const gridEl = document.getElementById('articleGrid');
+  const noResultsEl = document.getElementById('noResults');
+  const paginationEl = document.getElementById('pagination');
+  const pageInfoEl = document.getElementById('pageInfo');
+  const activeFiltersEl = document.getElementById('activeFilters');
+  const paginationWrap = document.getElementById('paginationWrap');
+
+  /* ── Filtering ── */
+  function getFiltered(){
+    return articles.filter(a => {
+      if(currentCat !== 'all' && a.cat !== currentCat) return false;
+      if(activeTags.size > 0 && !a.tags.some(t => activeTags.has(t))) return false;
+      return true;
+    });
+  }
+
+  /* ── Render Cards ── */
+  function renderCards(){
+    const filtered = getFiltered();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+    if(currentPage > totalPages) currentPage = totalPages;
+
+    const start = (currentPage - 1) * PER_PAGE;
+    const pageItems = filtered.slice(start, start + PER_PAGE);
+
+    if(filtered.length === 0){
+      gridEl.innerHTML = '';
+      noResultsEl.classList.remove('hidden');
+      paginationWrap.classList.add('hidden');
+      return;
+    }
+    noResultsEl.classList.add('hidden');
+    paginationWrap.classList.remove('hidden');
+
+    gridEl.innerHTML = pageItems.map((a, i) => `
+      <article class="article-card fade-in-up" style="animation-delay:${i * 60}ms">
+        <img src="${a.img}" alt="${a.title}" loading="lazy"/>
+        <div class="card-body">
+          <span class="card-badge">${catLabels[a.cat] || a.cat}</span>
+          <h3 class="card-title">${a.title}</h3>
+          <p class="card-excerpt">${a.excerpt}</p>
+          <div class="card-tags">
+            ${a.tags.map(t => `<span class="card-tag">#${tagLabels[t] || t}</span>`).join('')}
+          </div>
+          <div class="card-footer">
+            <span class="card-date">${a.date}</span>
+            <a href="#" class="card-link">READ MORE →</a>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    /* Pagination */
+    let pHtml = `<button class="page-btn" data-page="prev" ${currentPage===1?'disabled':''}><i class="fa-solid fa-chevron-left text-xs"></i></button>`;
+    for(let p = 1; p <= totalPages; p++){
+      pHtml += `<button class="page-btn ${p===currentPage?'active':''}" data-page="${p}">${p}</button>`;
+    }
+    pHtml += `<button class="page-btn" data-page="next" ${currentPage===totalPages?'disabled':''}><i class="fa-solid fa-chevron-right text-xs"></i></button>`;
+    paginationEl.innerHTML = pHtml;
+
+    const end = Math.min(start + PER_PAGE, filtered.length);
+    pageInfoEl.textContent = `${filtered.length}件中 ${start+1}–${end}件を表示`;
+  }
+
+  /* ── Render Active Filters ── */
+  function renderActiveFilters(){
+    let html = '';
+    if(currentCat !== 'all'){
+      html += `<span class="active-chip">${catLabels[currentCat]}<button data-clear-cat>&times;</button></span>`;
+    }
+    activeTags.forEach(t => {
+      html += `<span class="active-chip">#${tagLabels[t]}<button data-clear-tag="${t}">&times;</button></span>`;
+    });
+    if(currentCat !== 'all' || activeTags.size > 0){
+      html += `<button class="text-white/40 hover:text-white text-xs font-mono ml-2 transition" id="clearFilters">クリア</button>`;
+    }
+    activeFiltersEl.innerHTML = html;
+  }
+
+  /* ── Event: Category buttons ── */
+  document.getElementById('catBtns').addEventListener('click', e => {
+    const btn = e.target.closest('.cat-btn');
+    if(!btn) return;
+    currentCat = btn.dataset.cat;
+    document.querySelectorAll('#catBtns .cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === currentCat));
+    currentPage = 1;
+    renderActiveFilters();
+    renderCards();
+  });
+
+  /* ── Event: Tag buttons ── */
+  document.getElementById('tagBtns').addEventListener('click', e => {
+    const btn = e.target.closest('.tag-btn');
+    if(!btn) return;
+    const tag = btn.dataset.tag;
+    if(activeTags.has(tag)){ activeTags.delete(tag); btn.classList.remove('active'); }
+    else{ activeTags.add(tag); btn.classList.add('active'); }
+    currentPage = 1;
+    renderActiveFilters();
+    renderCards();
+  });
+
+  /* ── Event: Pagination ── */
+  paginationEl.addEventListener('click', e => {
+    const btn = e.target.closest('.page-btn');
+    if(!btn || btn.disabled) return;
+    const val = btn.dataset.page;
+    if(val === 'prev') currentPage--;
+    else if(val === 'next') currentPage++;
+    else currentPage = parseInt(val);
+    renderCards();
+    document.getElementById('section-a2').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  /* ── Event: Active filter chips ── */
+  activeFiltersEl.addEventListener('click', e => {
+    if(e.target.dataset.clearCat !== undefined){
+      currentCat = 'all';
+      document.querySelectorAll('#catBtns .cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+    }
+    if(e.target.dataset.clearTag){
+      activeTags.delete(e.target.dataset.clearTag);
+      document.querySelectorAll('#tagBtns .tag-btn').forEach(b => {
+        if(b.dataset.tag === e.target.dataset.clearTag) b.classList.remove('active');
+      });
+    }
+    if(e.target.id === 'clearFilters'){
+      currentCat = 'all';
+      activeTags.clear();
+      document.querySelectorAll('#catBtns .cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+      document.querySelectorAll('#tagBtns .tag-btn').forEach(b => b.classList.remove('active'));
+    }
+    currentPage = 1;
+    renderActiveFilters();
+    renderCards();
+  });
+
+  /* ── Event: No results clear button ── */
+  document.getElementById('clearAllBtn').addEventListener('click', () => {
+    currentCat = 'all';
+    activeTags.clear();
+    document.querySelectorAll('#catBtns .cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+    document.querySelectorAll('#tagBtns .tag-btn').forEach(b => b.classList.remove('active'));
+    currentPage = 1;
+    renderActiveFilters();
+    renderCards();
+  });
+
+  /* ── Pickup Articles ── */
+  const pickupIds = [1, 6, 9];
+  const pickupArticles = pickupIds.map(id => articles.find(a => a.id === id));
+
+  function renderPickup(){
+    const grid = document.getElementById('pickupGrid');
+    if(!grid || pickupArticles.length < 3) return;
+    const [main, sub1, sub2] = pickupArticles;
+
+    grid.innerHTML = `
+      <a href="#" class="pickup-hero lg:col-span-3 fade-in-up">
+        <img src="${main.img}" alt="${main.title}" loading="lazy"/>
+        <div class="pickup-overlay">
+          <span class="pickup-label"><i class="fa-solid fa-fire text-[10px]"></i> PICKUP</span>
+          <h3 class="pickup-title">${main.title}</h3>
+          <p class="pickup-excerpt">${main.excerpt}</p>
+          <div class="pickup-meta">
+            <span class="meta-date">${main.date}</span>
+            <span class="meta-link">READ MORE &rarr;</span>
+          </div>
+        </div>
+      </a>
+      <div class="lg:col-span-2 flex flex-col gap-5">
+        <a href="#" class="pickup-side fade-in-up" style="animation-delay:80ms">
+          <img src="${sub1.img}" alt="${sub1.title}" loading="lazy"/>
+          <div class="pickup-side-body">
+            <div class="pickup-side-badge">${catLabels[sub1.cat]}</div>
+            <h4 class="pickup-side-title">${sub1.title}</h4>
+            <span class="pickup-side-date">${sub1.date}</span>
+          </div>
+        </a>
+        <a href="#" class="pickup-side fade-in-up" style="animation-delay:160ms">
+          <img src="${sub2.img}" alt="${sub2.title}" loading="lazy"/>
+          <div class="pickup-side-body">
+            <div class="pickup-side-badge">${catLabels[sub2.cat]}</div>
+            <h4 class="pickup-side-title">${sub2.title}</h4>
+            <span class="pickup-side-date">${sub2.date}</span>
+          </div>
+        </a>
+      </div>
+    `;
+  }
+  renderPickup();
+
+  /* ── Initial render ── */
+  renderActiveFilters();
+  renderCards();
+});
+</script></body></html>

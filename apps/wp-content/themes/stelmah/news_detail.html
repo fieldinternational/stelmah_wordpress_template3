@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>top_html</title><script src="https://cdn.tailwindcss.com"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/><script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="True" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=Noto+Sans+JP:wght@300;400;500;700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/><script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'neon-pink': '#FF00FF',
+        'dark-bg': '#111111',
+        'card-bg': '#1a1a1a',
+        'grid-line': '#2a2a2a',
+      },
+      fontFamily: {
+        sans: ['Inter','Noto Sans JP','sans-serif'],
+        mono: ['Space Mono','Courier New','monospace'],
+      }
+    }
+  }
+};
+window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+</script><style id="unified-style">
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:#0f0f0f; }
+::-webkit-scrollbar-thumb{ background:#FF00FF; border-radius:6px; }
+
+html,body{ height:100%; }
+body{
+  background:#111;
+  color:#eee;
+  font-family: Inter,'Noto Sans JP',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ color:#fff; }
+a{ color:#fff; }
+a:hover{ color:#FF00FF; }
+
+.unified-section{
+  background:#111;
+  color:#eee;
+}
+.unified-section .bg-white,
+.unified-section .bg-gray-50,
+.unified-section .bg-gray-100{
+  background:#1a1a1a !important;
+}
+.unified-section .text-gray-900,
+.unified-section .text-gray-800,
+.unified-section .text-gray-700{
+  color:#fff !important;
+}
+.unified-section .text-gray-600,
+.unified-section .text-gray-500,
+.unified-section .text-gray-400,
+.unified-section .text-studio-text,
+.unified-section .text-studio-muted{
+  color:rgba(255,255,255,0.72) !important;
+}
+.unified-section .border-gray-100,
+.unified-section .border-gray-200,
+.unified-section .border-gray-300{
+  border-color:rgba(255,255,255,0.12) !important;
+}
+.unified-section .shadow-lg,
+.unified-section .shadow-xl,
+.unified-section .shadow-2xl{
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45) !important;
+}
+
+.unified-section a.bg-studio-accent,
+.unified-section button.bg-studio-accent,
+.unified-section a.bg-gray-900,
+.unified-section a.bg-black,
+.unified-section button.bg-black{
+  background:#FF00FF !important;
+  color:#000 !important;
+}
+.unified-section a.border-studio-accent,
+.unified-section a.border-black,
+.unified-section .border-studio-accent{
+  border-color:#FF00FF !important;
+}
+.unified-section a.text-studio-accent,
+.unified-section i.text-studio-accent{
+  color:#FF00FF !important;
+}
+
+.top-hero{ position:relative; padding-top:88px; }
+.top-slider{ position:relative; overflow:hidden; border-radius:24px; background:#0b0b0b; }
+.top-slider-track{ display:flex; transition:transform 520ms ease; will-change:transform; }
+.top-slide{ min-width:100%; }
+.top-slide img{ width:100%; height:clamp(320px,44vw,640px); object-fit:cover; display:block; filter:grayscale(100%); transition:filter 400ms ease; }
+.top-slider:hover .top-slide img{ filter:grayscale(0%); }
+.top-slider-dots{
+  position:absolute; left:0; right:0; bottom:14px;
+  display:flex; justify-content:center; align-items:center;
+  gap:10px; padding:0 12px;
+}
+.top-dot{
+  width:10px; height:10px; border-radius:999px; border:0;
+  background:rgba(255,255,255,0.45);
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  cursor:pointer;
+}
+.top-dot.is-active{ background:rgba(255,255,255,0.92); transform:scale(1.15); }
+.top-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(0,0,0,0.25);
+  color:white; font-size:26px; line-height:40px;
+  cursor:pointer; opacity:0;
+  transition:opacity 200ms ease, background 200ms ease;
+}
+.top-prev{ left:14px; }
+.top-next{ right:14px; }
+.top-slider:hover .top-arrow{ opacity:1; }
+.top-arrow:hover{ background:rgba(255,255,255,0.15); }
+
+@media (prefers-reduced-motion: reduce){
+  .top-slider-track{ transition:none; }
+}
+</style></head>
+<body class="bg-black text-white">
+<header class="fixed top-0 left-0 w-full z-50 pointer-events-none mix-blend-difference text-white p-6 flex justify-between items-start"><div class="font-mono text-sm tracking-widest"><span class="block">ACRY LABO</span><span class="block text-xs opacity-70">ACRYLIC GOODS MEDIA</span></div><div class="pointer-events-auto flex items-center gap-3"><nav class="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.35em] uppercase opacity-90"><a href="index.html" class="hover:text-neon-pink transition-colors">TOP</a><a href="articles.html" class="hover:text-neon-pink transition-colors">ARTICLES</a><a href="guide.html" class="hover:text-neon-pink transition-colors">GUIDE</a><a href="about.html" class="hover:text-neon-pink transition-colors">ABOUT</a><a href="privacy.html" class="hover:text-neon-pink transition-colors">PRIVACY</a><a href="news.html" class="hover:text-neon-pink transition-colors">NEWS</a><a href="#" class="hover:text-neon-pink transition-colors">SERVICE</a></nav><div class="text-xs opacity-80 font-mono" id="topClock">--:--</div><a class="bg-neon-pink text-black hover:bg-white px-4 py-2 font-bold uppercase text-xs tracking-widest transition-colors" href="#contact">お問い合わせ</a></div></header>
+<div class="h-24"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-16">
+  <nav class="text-sm text-gray-400 font-mono tracking-widest">
+    <a href="index.html" class="hover:text-white">HOME</a>
+    <span class="mx-2">/</span>
+    <a href="news.html" class="hover:text-white">NEWS</a>
+    <span class="mx-2">/</span>
+    <span class="text-gray-300">DETAIL</span>
+  </nav>
+
+  <header class="mt-8">
+    <div class="flex items-center gap-3">
+      <p class="font-mono text-xs tracking-widest text-gray-400">2026-03-01</p>
+      <span class="font-mono text-[11px] tracking-widest px-3 py-1 rounded-full border border-white/10 bg-black/30">特集</span>
+    </div>
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight mt-4">春のおすすめアクリルグッズサービス特集</h1>
+    <p class="text-gray-300 mt-5 leading-relaxed">この春おすすめのアクリルグッズ制作サービスを徹底比較。初心者にもわかりやすく、各サービスの特徴をまとめました。</p>
+  </header>
+
+  <figure class="mt-10 rounded-3xl overflow-hidden border border-white/10 bg-white/5">
+    <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1800&q=70" alt="" class="w-full h-72 md:h-96 object-cover opacity-90" />
+  </figure>
+
+  <article class="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-10 leading-relaxed">
+    <p class="text-gray-200">この記事では、春にぴったりのアクリルグッズ制作サービスを比較・紹介しています。アクリルスタンド／キーホルダー／ネームプレートなど、商品ごとのおすすめサービスをピックアップしました。</p>
+
+    <h2 class="text-2xl font-black mt-10">紹介サービスの比較ポイント</h2>
+    <ul class="mt-4 space-y-2 text-gray-200">
+      <li>・対応商品（アクリルスタンド・キーホルダー・ネームプレート）</li>
+      <li>・料金体系と最低注文数</li>
+      <li>・納期と品質</li>
+      <li>・テンプレート・デザインサポートの有無</li>
+    </ul>
+
+    <h2 class="text-2xl font-black mt-10">サービスの選び方</h2>
+    <ol class="mt-4 space-y-2 text-gray-200">
+      <li>1. 作りたいグッズの目的を決める</li>
+      <li>2. 各サービスの特徴・料金を比較する</li>
+      <li>3. 気に入ったサービスに依頼する</li>
+    </ol>
+
+    <div class="mt-10 rounded-2xl border border-white/10 bg-black/30 p-6">
+      <p class="font-mono text-xs tracking-widest text-gray-400">NOTE</p>
+      <p class="text-gray-200 mt-2">実データ連携前の静的テンプレートです。CMS化する場合は、このカード／本文構造をそのまま流用できます。</p>
+    </div>
+  </article>
+
+  <div class="mt-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+    <a href="news.html" class="px-5 py-3 rounded-2xl border border-white/10 bg-black/30 hover:bg-white/10 transition text-sm font-bold tracking-wide">← 一覧へ戻る</a>
+    <a href="#contact" class="bg-neon-pink text-black hover:bg-white px-6 py-3 font-bold uppercase text-xs tracking-widest transition-colors rounded-full text-center">お問い合わせ</a>
+  </div>
+
+  <section class="mt-14 rounded-3xl border border-white/10 bg-white/5 p-8">
+    <p class="font-mono text-xs tracking-widest text-gray-400">NEXT</p>
+    <a href="news_detail.html" class="block mt-3 group">
+      <h3 class="text-xl font-black group-hover:underline underline-offset-4">新規サービス掲載のお知らせ</h3>
+      <p class="text-gray-300 mt-2">新たに3つのアクリルグッズ制作サービスを掲載しました。</p>
+    </a>
+  </section>
+</main>
+
+<footer class="unified-section py-16 border-t border-white/10" id="contact"><div class="max-w-6xl mx-auto px-6">
+<div class="font-mono text-xs tracking-[0.5em] text-neon-pink">ABOUT US</div>
+<h2 class="text-3xl font-bold mt-3 text-white">運営情報</h2>
+<div class="mt-8 rounded-3xl border border-white/10 bg-[#0f0f10] p-8 max-w-lg">
+<dl class="space-y-4 text-sm text-white/80">
+<div class="flex justify-between gap-4"><dt class="text-white/60">運営会社</dt><dd class="text-right">ACRY LABO</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">所在地</dt><dd class="text-right">〒107-0062 東京都港区南青山5-10-1</dd></div>
+<div class="flex justify-between gap-4"><dt class="text-white/60">Email</dt><dd class="text-right">info@acrylabo.jp</dd></div>
+</dl>
+</div>
+</div></footer>
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+  const clockEl = document.getElementById('topClock');
+  const pad = (n)=>String(n).padStart(2,'0');
+  const tick = ()=> {
+    const now = new Date();
+    if(clockEl) clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  };
+  tick();
+  setInterval(tick, 10000);
+
+  const slider = document.querySelector('.top-slider');
+  if(!slider) return;
+  const track = slider.querySelector('.top-slider-track');
+  const slides = Array.from(slider.querySelectorAll('.top-slide'));
+  const dots = Array.from(slider.querySelectorAll('.top-dot'));
+  const prev = slider.querySelector('.top-prev');
+  const next = slider.querySelector('.top-next');
+
+  let idx = 0;
+  let timer = null;
+
+  const setActive = (i) => {
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+  };
+
+  const start = () => {
+    stop();
+    timer = setInterval(() => setActive(idx + 1), 4200);
+  };
+  const stop = () => {
+    if(timer) clearInterval(timer);
+    timer = null;
+  };
+
+  dots.forEach((d, i) => d.addEventListener('click', () => { setActive(i); start(); }));
+  if(prev) prev.addEventListener('click', () => { setActive(idx - 1); start(); });
+  if(next) next.addEventListener('click', () => { setActive(idx + 1); start(); });
+
+  let startX = 0;
+  let isDown = false;
+  slider.addEventListener('pointerdown', (e) => { isDown = true; startX = e.clientX; stop(); });
+  const endSwipe = (clientX) => {
+    if(!isDown) return;
+    isDown = false;
+    const dx = clientX - startX;
+    if(Math.abs(dx) > 40) setActive(idx + (dx < 0 ? 1 : -1));
+    start();
+  };
+  slider.addEventListener('pointerup', (e) => endSwipe(e.clientX));
+  slider.addEventListener('pointercancel', () => { isDown = false; start(); });
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+
+  setActive(0);
+  start();
+});
+</script>
+
+</body>
+</html>

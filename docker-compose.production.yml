@@ -1,0 +1,63 @@
+volumes:
+  php-fpm-socket:
+services:
+  db:
+    image: mysql:8.0.32
+    volumes:
+      - ./docker/db/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      TZ: Asia/Tokyo
+
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    volumes:
+      - ./apps:/var/www/html:delegated
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+        volume:
+          nocopy: true
+    depends_on: ["db"]
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./docker/nginx/conf.d/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./apps:/var/www/html
+      - ./docker/nginx/log/access.log:/var/log/nginx/access.log
+      - ./docker/nginx/log/error.log:/var/log/nginx/error.log
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+        volume:
+          nocopy: true
+    # ports: ["80:80"]
+    depends_on: ["app"]
+
+  https-portal:
+    image: steveltn/https-portal:1
+    depends_on:
+      - nginx
+    links:
+      - nginx
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./ssl_certs:/var/lib/https-portal
+    environment:
+      DOMAINS: "${DOMAIN} -> http://nginx:80"
+      STAGE: production
+      CLIENT_MAX_BODY_SIZE: 64M
