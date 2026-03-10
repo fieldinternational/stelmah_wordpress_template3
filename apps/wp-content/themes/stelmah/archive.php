@@ -433,39 +433,6 @@ $is_articles_filter = stelmah_is_articles_filter();
 </section>
 <?php endif; ?>
 
-<?php if ( $current_cat_id || $current_tag_id ) : ?>
-<!-- Category x Tag Detail Section -->
-<?php
-$_cattag_post = stelmah_get_cattag_content($current_cat_id, $current_tag_id);
-?>
-<?php if ( $_cattag_post ) : ?>
-<?php
-$_detail_cat = $current_cat_id ? get_category($current_cat_id) : null;
-$_detail_tag = $current_tag_id ? get_tag($current_tag_id) : null;
-$_detail_title = '';
-if ( $_detail_cat && $_detail_tag ) {
-    $_detail_title = esc_html($_detail_cat->name) . ' × ' . esc_html($_detail_tag->name) . ' の詳細情報';
-} elseif ( $_detail_cat ) {
-    $_detail_title = esc_html($_detail_cat->name) . 'の詳細情報';
-} elseif ( $_detail_tag ) {
-    $_detail_title = esc_html($_detail_tag->name) . 'の詳細情報';
-}
-?>
-<section class="pt-12 pb-10 border-t border-white/10" id="cattagDetailSection">
-  <div class="flex items-center gap-4 mb-6">
-    <div>
-      <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">CATEGORY &times; TAG</div>
-      <h2 class="text-2xl font-bold mt-1"><?php echo $_detail_title; ?></h2>
-    </div>
-    <div class="flex-1 h-px bg-white/10 ml-4"></div>
-  </div>
-  <div class="cattag-detail">
-    <?php echo apply_filters('the_content', $_cattag_post->post_content); ?>
-  </div>
-</section>
-<?php endif; ?>
-<?php endif; ?>
-
 <!-- Filter Section -->
 <section class="pt-12 pb-8 border-t border-white/10" id="section-a2" style="scroll-margin-top:110px;">
   <div class="font-mono text-xs tracking-[0.4em] text-neon-pink mb-2">ARTICLES</div>
@@ -608,6 +575,39 @@ if ( !empty($bottom_tags) ) : ?>
     <?php endforeach; ?>
   </div>
 </section>
+<?php endif; ?>
+
+<?php if ( $current_cat_id || $current_tag_id ) : ?>
+<!-- Category x Tag Detail Section -->
+<?php
+$_cattag_post = stelmah_get_cattag_content($current_cat_id, $current_tag_id);
+?>
+<?php if ( $_cattag_post ) : ?>
+<?php
+$_detail_cat = $current_cat_id ? get_category($current_cat_id) : null;
+$_detail_tag = $current_tag_id ? get_tag($current_tag_id) : null;
+$_detail_title = '';
+if ( $_detail_cat && $_detail_tag ) {
+    $_detail_title = esc_html($_detail_cat->name) . ' × ' . esc_html($_detail_tag->name) . ' の詳細情報';
+} elseif ( $_detail_cat ) {
+    $_detail_title = esc_html($_detail_cat->name) . 'の詳細情報';
+} elseif ( $_detail_tag ) {
+    $_detail_title = esc_html($_detail_tag->name) . 'の詳細情報';
+}
+?>
+<section class="pt-12 pb-10 border-t border-white/10" id="cattagDetailSection">
+  <div class="flex items-center gap-4 mb-6">
+    <div>
+      <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">CATEGORY &times; TAG</div>
+      <h2 class="text-2xl font-bold mt-1"><?php echo $_detail_title; ?></h2>
+    </div>
+    <div class="flex-1 h-px bg-white/10 ml-4"></div>
+  </div>
+  <div class="cattag-detail">
+    <?php echo apply_filters('the_content', $_cattag_post->post_content); ?>
+  </div>
+</section>
+<?php endif; ?>
 <?php endif; ?>
 
 </div>

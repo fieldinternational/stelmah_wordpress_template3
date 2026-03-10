@@ -7,3 +7,4 @@ docker/nginx/log
 # CLAUDE
 CLAUDE.md
 .serena
+.playwright-mcp
