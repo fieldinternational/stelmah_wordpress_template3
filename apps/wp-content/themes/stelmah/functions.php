@@ -405,35 +405,158 @@ function stelmah_articles_template_include($template) {
 }
 add_filter('template_include', 'stelmah_articles_template_include');
 
-// ドキュメントタイトル: カスタムURL時のタイトル生成
-function stelmah_articles_document_title($title) {
-    if (!stelmah_is_articles_filter()) {
+// ドキュメントタイトル: 全ページ対応のtitle生成
+function stelmah_seo_document_title($title) {
+    $articles_label = stelmah_get_option('seo_articles_label', 'アクリルグッズ');
+
+    // トップページ
+    if (is_front_page()) {
+        $custom_title = stelmah_get_option('seo_site_title', '');
+        if ($custom_title) {
+            $title['title'] = $custom_title;
+            // サイト名の自動付加を除去
+            unset($title['site']);
+            unset($title['tagline']);
+        }
         return $title;
     }
 
-    $filter  = stelmah_get_current_articles_filter();
-    $parts   = array();
+    // カスタムフィルタURL (/articles/cat_X, /articles/tag_Y, /articles/cat_X-tag_Y)
+    if (stelmah_is_articles_filter()) {
+        $filter = stelmah_get_current_articles_filter();
+        $parts  = array();
 
-    if ($filter['cat_id']) {
-        $cat = get_category($filter['cat_id']);
-        if ($cat && !is_wp_error($cat)) {
-            $parts[] = $cat->name;
+        if ($filter['cat_id']) {
+            $cat = get_category($filter['cat_id']);
+            if ($cat && !is_wp_error($cat)) {
+                $parts[] = $cat->name;
+            }
         }
-    }
-    if ($filter['tag_id']) {
-        $tag = get_tag($filter['tag_id']);
-        if ($tag && !is_wp_error($tag)) {
-            $parts[] = '#' . $tag->name;
+        if ($filter['tag_id']) {
+            $tag = get_tag($filter['tag_id']);
+            if ($tag && !is_wp_error($tag)) {
+                if (!empty($parts)) {
+                    // cat_X-tag_Y: {カテゴリ名}の{タグ名}の{xxxx}に関する記事一覧
+                    $parts[] = $tag->name;
+                    $title['title'] = $parts[0] . 'の' . $parts[1] . 'の' . $articles_label . 'に関する記事一覧';
+                } else {
+                    // tag_Y のみ: {タグ名}の{xxxx}に関する記事一覧
+                    $title['title'] = $tag->name . 'の' . $articles_label . 'に関する記事一覧';
+                }
+                return $title;
+            }
         }
+        if (!empty($parts)) {
+            // cat_X のみ: {カテゴリ名}の{xxxx}に関する記事一覧
+            $title['title'] = $parts[0] . 'の' . $articles_label . 'に関する記事一覧';
+        }
+        return $title;
     }
 
-    if (!empty($parts)) {
-        $title['title'] = implode(' × ', $parts) . ' の記事一覧';
+    // 投稿詳細
+    if (is_singular('post')) {
+        $post       = get_queried_object();
+        $categories = get_the_category($post->ID);
+        $tags       = get_the_tags($post->ID);
+        $cat_name   = (!empty($categories)) ? $categories[0]->name : '';
+        $tag_name   = (!empty($tags)) ? $tags[0]->name : '';
+        $parts      = array();
+        if ($cat_name) $parts[] = $cat_name;
+        if ($tag_name) $parts[] = $tag_name;
+        if (!empty($parts)) {
+            $title['title'] = implode(' ', $parts) . ' ' . get_the_title($post->ID);
+        }
+        return $title;
     }
 
+    // ニュース詳細・固定ページはデフォルトのまま
     return $title;
 }
-add_filter('document_title_parts', 'stelmah_articles_document_title');
+add_filter('document_title_parts', 'stelmah_seo_document_title');
+
+// meta description: 全ページ対応の動的生成
+function stelmah_get_meta_description() {
+    $articles_label = stelmah_get_option('seo_articles_label', 'アクリルグッズ');
+
+    // トップページ
+    if (is_front_page()) {
+        $desc = stelmah_get_option('seo_site_description', '');
+        if ($desc) return $desc;
+        $site_name = stelmah_get_option('site_name', get_bloginfo('name'));
+        $subtitle  = stelmah_get_option('site_subtitle', get_bloginfo('description'));
+        return $site_name . ($subtitle ? ' | ' . $subtitle : '');
+    }
+
+    // カスタムフィルタURL
+    if (stelmah_is_articles_filter()) {
+        $filter = stelmah_get_current_articles_filter();
+        $cat_name = '';
+        $tag_name = '';
+        if ($filter['cat_id']) {
+            $cat = get_category($filter['cat_id']);
+            if ($cat && !is_wp_error($cat)) $cat_name = $cat->name;
+        }
+        if ($filter['tag_id']) {
+            $tag = get_tag($filter['tag_id']);
+            if ($tag && !is_wp_error($tag)) $tag_name = $tag->name;
+        }
+        if ($cat_name && $tag_name) {
+            return $cat_name . 'の' . $tag_name . 'の' . $articles_label . 'に関する記事一覧です。';
+        } elseif ($cat_name) {
+            return $cat_name . 'の' . $articles_label . 'に関する記事一覧です。';
+        } elseif ($tag_name) {
+            return $tag_name . 'の' . $articles_label . 'に関する記事一覧です。';
+        }
+        return '';
+    }
+
+    // 投稿詳細
+    if (is_singular('post')) {
+        $post       = get_queried_object();
+        $categories = get_the_category($post->ID);
+        $tags       = get_the_tags($post->ID);
+        $cat_name   = (!empty($categories)) ? $categories[0]->name : '';
+        $tag_name   = (!empty($tags)) ? $tags[0]->name : '';
+        $post_title = get_the_title($post->ID);
+        $excerpt    = mb_substr(wp_strip_all_tags(get_the_excerpt($post->ID)), 0, 120);
+
+        $parts = array();
+        if ($cat_name) $parts[] = $cat_name;
+        if ($tag_name) $parts[] = $tag_name;
+        $prefix = !empty($parts) ? implode('の', $parts) . 'に関する記事' : '記事';
+        return $prefix . '「' . $post_title . '」。' . $excerpt;
+    }
+
+    // ニュース詳細
+    if (is_singular('news')) {
+        $post    = get_queried_object();
+        $excerpt = mb_substr(wp_strip_all_tags(get_the_excerpt($post->ID)), 0, 120);
+        return get_the_title($post->ID) . '。' . $excerpt;
+    }
+
+    // 固定ページ
+    if (is_page()) {
+        $post    = get_queried_object();
+        $excerpt = get_the_excerpt($post->ID);
+        if (!$excerpt) {
+            $excerpt = mb_substr(wp_strip_all_tags($post->post_content), 0, 120);
+        } else {
+            $excerpt = mb_substr(wp_strip_all_tags($excerpt), 0, 120);
+        }
+        return $excerpt;
+    }
+
+    return '';
+}
+
+// meta descriptionタグをwp_headで出力
+function stelmah_output_meta_description() {
+    $desc = stelmah_get_meta_description();
+    if ($desc) {
+        echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+    }
+}
+add_action('wp_head', 'stelmah_output_meta_description', 1);
 
 // ページネーション: カスタムURL対応
 function stelmah_articles_pagination() {
@@ -1004,6 +1127,12 @@ function stelmah_acf_register_fields() {
             'preview_size'  => 'medium',
         );
     }
+
+    // ===== Tab: SEO設定 =====
+    $fields[] = array('key' => 'field_stelmah_tab_seo', 'label' => 'SEO設定', 'type' => 'tab');
+    $fields[] = array('key' => 'field_stelmah_seo_site_title',       'label' => 'トップページ title',            'name' => 'seo_site_title',       'type' => 'text',     'instructions' => '未設定の場合はサイト名が使用されます');
+    $fields[] = array('key' => 'field_stelmah_seo_site_description', 'label' => 'トップページ meta description', 'name' => 'seo_site_description', 'type' => 'textarea', 'rows' => 3, 'instructions' => '未設定の場合は「サイト名 | サブタイトル」が使用されます');
+    $fields[] = array('key' => 'field_stelmah_seo_articles_label',   'label' => 'フィルタページ ラベル',          'name' => 'seo_articles_label',   'type' => 'text',     'default_value' => 'アクリルグッズ', 'instructions' => 'フィルタページのtitle/descriptionで使用される語句（例: 「○○のアクリルグッズに関する記事一覧」）');
 
     acf_add_local_field_group(array(
         'key'      => 'group_stelmah_settings',

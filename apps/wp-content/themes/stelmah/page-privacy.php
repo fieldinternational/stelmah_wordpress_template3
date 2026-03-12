@@ -37,14 +37,14 @@ get_header(); ?>
             <div class="font-mono text-xs tracking-[0.4em] text-neon-pink">POLICY</div>
             <h2 class="text-2xl md:text-3xl font-bold mt-2">個人情報の取扱い</h2>
             <p class="text-white/70 mt-4 text-sm leading-relaxed">
-              当ブログ（徳島のハイブランドナビ局）では、以下のとおりプライバシーポリシーを定めます。
+              当ブログ（<?php echo esc_html(stelmah_get_option('site_name', get_bloginfo('name'))); ?>）では、以下のとおりプライバシーポリシーを定めます。
             </p>
           </div>
           <div class="p-8 md:p-10 space-y-10">
             <div>
               <h3 class="text-lg font-bold">1. 個人情報の利用目的</h3>
               <p class="text-white/70 text-sm mt-3 leading-relaxed">
-                当ブログ(徳島のハイブランドナビ局)では、お問い合わせや記事へのコメントの際、名前やメールアドレス等の個人情報を入力いただく場合がございます。<br>
+                当ブログ(<?php echo esc_html(stelmah_get_option('site_name', get_bloginfo('name'))); ?>)では、お問い合わせや記事へのコメントの際、名前やメールアドレス等の個人情報を入力いただく場合がございます。<br>
                 取得した個人情報は、お問い合わせに対する回答や必要な情報を電子メールなどでご連絡する場合に利用させていただくものであり、これらの目的以外では利用いたしません。
               </p>
             </div>
