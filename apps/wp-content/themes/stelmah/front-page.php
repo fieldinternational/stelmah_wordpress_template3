@@ -103,7 +103,7 @@ $highlight_counter = 1;
 foreach ($highlight_categories as $cat) :
     $cat_image_id  = get_term_meta($cat->term_id, 'category_image', true);
     $cat_image_url = $cat_image_id ? wp_get_attachment_url($cat_image_id) : '';
-    $cat_link      = get_category_link($cat->term_id);
+    $cat_link      = home_url('/article/cat_' . $cat->term_id . '/');
     $delay         = $highlight_counter * 0.1;
 ?>
 <a href="<?php echo esc_url($cat_link); ?>" class="group cursor-pointer fade-in-up" style="animation-delay: <?php echo esc_attr($delay); ?>s;">
@@ -382,32 +382,45 @@ else :
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <?php
+$featured_query = new WP_Query(array(
+    'post_type'      => 'post',
+    'posts_per_page' => 3,
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+));
 $svc_offset_classes = array('', 'md:mt-16', '');
-foreach ($services_items as $i => $svc) :
-    $offset = isset($svc_offset_classes[$i]) ? $svc_offset_classes[$i] : '';
-    $link   = !empty($svc['link']) ? esc_url($svc['link']) : '#';
-    $image  = !empty($svc['image']) ? esc_url($svc['image']) : '';
+$svc_i = 0;
+if ($featured_query->have_posts()) :
+    while ($featured_query->have_posts()) : $featured_query->the_post();
+        $offset = isset($svc_offset_classes[$svc_i]) ? $svc_offset_classes[$svc_i] : '';
+        $feat_cats = get_the_category();
+        $feat_cat_name = $feat_cats ? $feat_cats[0]->name : '';
 ?>
 <div class="group cursor-pointer <?php echo $offset; ?>">
-<?php if ($link !== '#') : ?><a href="<?php echo $link; ?>"><?php endif; ?>
+<a href="<?php the_permalink(); ?>">
 <div class="h-[500px] overflow-hidden border-2 border-studio-black relative mb-4">
-<div class="absolute top-4 left-4 z-10 bg-neon-lime px-3 py-1 font-mono text-xs font-bold border border-black"><?php echo esc_html($svc['label']); ?></div>
-<?php if ($image) : ?>
-<img alt="<?php echo esc_attr($svc['title']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo $image; ?>"/>
+<div class="absolute top-4 left-4 z-10 bg-neon-lime px-3 py-1 font-mono text-xs font-bold border border-black"><?php echo esc_html($feat_cat_name); ?></div>
+<?php if (has_post_thumbnail()) : ?>
+<img alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'large')); ?>"/>
 <?php else : ?>
 <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400"><i class="fa-solid fa-image text-4xl"></i></div>
 <?php endif; ?>
 </div>
 <div class="flex justify-between items-start">
 <div>
-<h3 class="text-2xl font-bold mb-1"><?php echo esc_html($svc['title']); ?></h3>
-<p class="font-mono text-sm text-gray-600"><?php echo esc_html($svc['description']); ?></p>
+<h3 class="text-2xl font-bold mb-1"><?php the_title(); ?></h3>
+<p class="font-mono text-sm text-gray-600"><?php echo esc_html(get_the_date('Y.m.d')); ?></p>
 </div>
 <i class="fa-solid fa-arrow-right -rotate-45 text-2xl group-hover:rotate-0 transition-transform duration-300"></i>
 </div>
-<?php if ($link !== '#') : ?></a><?php endif; ?>
+</a>
 </div>
-<?php endforeach; ?>
+<?php
+        $svc_i++;
+    endwhile;
+    wp_reset_postdata();
+endif;
+?>
 </div>
 </div>
 </section>
